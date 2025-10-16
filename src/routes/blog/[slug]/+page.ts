@@ -14,3 +14,10 @@ export const load: PageLoad = async ({ params }) => {
     post,
   };
 };
+
+export async function entries() {
+  const posts = await loadBlogPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}

@@ -7,7 +7,11 @@
 
 <svelte:head>
   <link rel="icon" href={favicon} />
-  <title>My Landing Page</title>
+  <title>Rifky Putra - Full Stack Developer & Software Engineer</title>
+  <meta
+    name="description"
+    content="Full Stack Developer specializing in modern web technologies including React, SvelteKit, TypeScript, and Node.js. Building innovative web applications and user experiences."
+  />
 </svelte:head>
 
 {@render children?.()}
