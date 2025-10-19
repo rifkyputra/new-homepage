@@ -47,14 +47,16 @@
   );
 </script>
 
-<GradientBackground class="variant-purple">
+<div
+  class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white"
+>
   <!-- Navigation -->
   <div class="flex justify-center pt-8">
     <Nav />
   </div>
 
   <!-- Main Content -->
-  <main class="container mx-auto px-6 py-12 text-white">
+  <main class="container mx-auto px-6 py-12">
     <!-- Hero Section -->
     <div class="text-center mb-16" in:fade={{ duration: 800 }}>
       <h1
@@ -248,7 +250,7 @@
     <!-- Footer -->
     <Footer class="mt-20" />
   </main>
-</GradientBackground>
+</div>
 
 <style>
   .featured-post {

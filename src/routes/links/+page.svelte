@@ -9,7 +9,7 @@
     Download,
   } from "@lucide/svelte";
   import { fade, fly } from "svelte/transition";
-  import { Nav, Footer, GradientBackground } from "$lib/components";
+  import { Nav, Footer } from "$lib/components";
 
   const socialLinks = [
     {
@@ -67,14 +67,16 @@
   ];
 </script>
 
-<GradientBackground class="variant-purple">
+<div
+  class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white"
+>
   <!-- Navigation -->
   <div class="flex justify-center pt-8">
     <Nav />
   </div>
 
   <!-- Main Content -->
-  <main class="container mx-auto px-6 py-12 text-white">
+  <main class="container mx-auto px-6 py-12">
     <div class="text-center mb-16" in:fade={{ duration: 800 }}>
       <h1
         class="text-5xl font-bold mb-4 bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent"
@@ -186,7 +188,7 @@
     <!-- Footer -->
     <Footer class="mt-20" />
   </main>
-</GradientBackground>
+</div>
 
 <style>
   .link-card {

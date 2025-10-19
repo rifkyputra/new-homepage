@@ -145,7 +145,6 @@
 
   .glass-text {
     position: relative;
-    width: 100%;
     color: var(--glass-text-color, currentColor);
     font-size: var(--glass-text-size, 18px);
     font-weight: 400;
