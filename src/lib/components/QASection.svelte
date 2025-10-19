@@ -51,18 +51,28 @@
   }
 </script>
 
-<div class="qa-container">
-  <h2 class="qa-title">Frequently Asked Questions</h2>
-  <div class="qa-list">
+<div class="w-full max-w-3xl mx-auto">
+  <h2
+    class="qa-title text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center mb-6 sm:mb-8 bg-gradient-to-r from-white via-indigo-100 to-indigo-200 bg-clip-text text-transparent"
+  >
+    Frequently Asked Questions
+  </h2>
+  <div class="flex flex-col gap-4">
     {#each qaItems as item, index}
-      <div class="qa-item" in:fade={{ duration: 600, delay: index * 100 }}>
+      <div
+        class="bg-[rgba(215,212,212,0.01)] backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/40 hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)]"
+        in:fade={{ duration: 600, delay: index * 100 }}
+      >
         <button
-          class="qa-question"
+          class="w-full p-4 sm:p-6 flex justify-between items-center bg-transparent border-none text-white text-base sm:text-lg font-semibold text-left cursor-pointer transition-all duration-300 hover:bg-white/5"
           onclick={() => toggleQuestion(index)}
           aria-expanded={item.isOpen}
         >
-          <span class="question-text">{item.question}</span>
-          <span class="question-icon" class:rotated={item.isOpen}>
+          <span class="flex-1 leading-relaxed">{item.question}</span>
+          <span
+            class="ml-3 sm:ml-4 transition-transform duration-300 text-white/70"
+            class:rotate-180={item.isOpen}
+          >
             <svg
               width="20"
               height="20"
@@ -81,8 +91,11 @@
           </span>
         </button>
         {#if item.isOpen}
-          <div class="qa-answer" transition:slide={{ duration: 300 }}>
-            <p>{item.answer}</p>
+          <div
+            class="px-4 sm:px-6 pb-4 sm:pb-6 text-white/90 leading-relaxed border-t border-white/10"
+            transition:slide={{ duration: 300 }}
+          >
+            <p class="m-0 pt-4 text-sm sm:text-base">{item.answer}</p>
           </div>
         {/if}
       </div>
@@ -91,127 +104,11 @@
 </div>
 
 <style>
-  .qa-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
   .qa-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: white;
-    text-align: center;
-    margin-bottom: 2rem;
-    background: linear-gradient(45deg, #fff, #e0e7ff, #c7d2fe);
-    background-clip: text;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, #ffffff, #a78bfa, #818cf8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-  }
-
-  .qa-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .qa-item {
-    background: rgba(215, 212, 212, 0.01);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-  }
-
-  .qa-item:hover {
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  }
-
-  .qa-question {
-    width: 100%;
-    padding: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .qa-question:hover {
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  .question-text {
-    flex: 1;
-    line-height: 1.4;
-  }
-
-  .question-icon {
-    margin-left: 1rem;
-    transition: transform 0.3s ease;
-    color: rgba(255, 255, 255, 0.7);
-  }
-
-  .question-icon.rotated {
-    transform: rotate(180deg);
-  }
-
-  .qa-answer {
-    padding: 0 1.5rem 1.5rem 1.5rem;
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.6;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .qa-answer p {
-    margin: 0;
-    padding-top: 1rem;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .qa-title {
-      font-size: 1.75rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .qa-question {
-      padding: 1rem;
-      font-size: 1rem;
-    }
-
-    .qa-answer {
-      padding: 0 1rem 1rem 1rem;
-      font-size: 0.95rem;
-    }
-
-    .question-icon {
-      margin-left: 0.5rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .qa-title {
-      font-size: 1.5rem;
-    }
-
-    .qa-question {
-      padding: 0.75rem;
-      font-size: 0.95rem;
-    }
-
-    .qa-answer {
-      padding: 0 0.75rem 0.75rem 0.75rem;
-      font-size: 0.9rem;
-    }
   }
 </style>

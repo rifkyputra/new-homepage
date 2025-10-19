@@ -155,16 +155,37 @@
     z-index: 1;
   }
 
-  /* Responsive adjustments */
+  /* Responsive adjustments using Tailwind-like approach */
+  .liquid-glass {
+    min-height: 44px; /* Minimum touch target size */
+  }
+
   @media (max-width: 768px) {
+    .liquid-glass {
+      padding: 0.5rem;
+    }
+
     .glass-text {
-      font-size: 16px;
+      font-size: max(14px, 4vw);
+      line-height: 1.4;
     }
   }
 
   @media (max-width: 480px) {
+    .liquid-glass {
+      padding: 0.75rem;
+    }
+
     .glass-text {
-      font-size: 14px;
+      font-size: max(12px, 3.5vw);
+      line-height: 1.3;
+    }
+  }
+
+  /* Ensure text doesn't get too small on very small screens */
+  @media (max-width: 320px) {
+    .glass-text {
+      font-size: 12px;
     }
   }
 </style>

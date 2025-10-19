@@ -69,20 +69,21 @@
     </div>
 
     <!-- Search and Filter -->
-    <div class="mb-12" in:fade={{ duration: 600, delay: 200 }}>
-      <div class="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto">
+    <div
+      class="mb-12 flex flex-col justify-center items-start gap-6"
+      in:fade={{ duration: 600, delay: 200 }}
+    >
+      <div class="relative flex-1">
+        <Search class="absolute top-3.5 left-3  w-5 h-5 text-gray-400 z-10" />
+        <input
+          type="text"
+          placeholder="Search articles..."
+          bind:value={searchQuery}
+          class=" pl-10 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg focus:outline-none focus:border-purple-400 transition-colors"
+        />
+      </div>
+      <div class="flex flex-col md:flex-row gap-4 max-w-4xl">
         <!-- Search Input -->
-        <div class="relative flex-1">
-          <Search
-            class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
-          />
-          <input
-            type="text"
-            placeholder="Search articles..."
-            bind:value={searchQuery}
-            class="w-full pl-10 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg focus:outline-none focus:border-purple-400 transition-colors"
-          />
-        </div>
 
         <!-- Tag Filter -->
         <div class="flex gap-2 flex-wrap">
@@ -138,8 +139,8 @@
                 {featuredPost.metadata.excerpt}
               </p>
 
-              <div class="flex items-center justify-between">
-                <div class="flex gap-2">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-wrap gap-2">
                   {#each featuredPost.metadata.tags as tag}
                     <span
                       class="px-3 py-1 bg-purple-500/30 text-purple-200 rounded-full text-sm"

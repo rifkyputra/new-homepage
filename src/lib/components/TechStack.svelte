@@ -154,29 +154,40 @@
   ]);
 </script>
 
-<div class="tech-stack-container">
+<div class="flex flex-col gap-4 sm:gap-6">
   {#each techStackMap as [categoryKey, category]}
-    <div class="tech-category">
-      <div class="category-header">
-        <span class="category-icon">{category.icon}</span>
-        <h4 class="category-title">{category.name}</h4>
+    <div
+      class="tech-category border border-white/10 rounded-xl p-3 sm:p-4 lg:p-5 backdrop-blur-sm transition-all duration-300 hover:bg-white/5 hover:border-white/20 hover:-translate-y-0.5"
+    >
+      <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+        <span class="text-lg sm:text-xl lg:text-2xl">{category.icon}</span>
+        <h4
+          class="text-base sm:text-lg lg:text-xl font-semibold text-white m-0"
+        >
+          {category.name}
+        </h4>
       </div>
       <div class="technologies-grid">
         {#each category.technologies as tech}
           <div
-            class="flex items-center justify-center tech-item py-4 rounded-lg transition-all duration-300"
+            class="flex items-center justify-center tech-item py-2 sm:py-3 lg:py-4 rounded-lg transition-all duration-300 hover:bg-white/10 hover:scale-105"
           >
-            <!-- <span class="tech-icon">{tech.icon}</span> -->
-            <div class="flex flex-col items-center justify-center gap-2">
+            <div
+              class="flex flex-col items-center justify-center gap-1 sm:gap-2"
+            >
               {#if tech.iconUrl}
                 <img
                   src={tech.iconUrl}
                   alt={tech.name}
+                  class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8"
                   style="width: {category.size ??
-                    '30px'}; height: {category.size ?? '30px'};"
+                    '24px'}; height: {category.size ?? '24px'};"
                 />
               {/if}
-              <span class="tech-name">{tech.name}</span>
+              <span
+                class="tech-name text-xs sm:text-sm text-gray-200 font-medium text-center"
+                >{tech.name}</span
+              >
             </div>
           </div>
         {/each}
@@ -186,89 +197,25 @@
 </div>
 
 <style>
-  .tech-stack-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  .tech-category {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.25rem;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-  }
-
-  .tech-category:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-  }
-
-  .category-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .category-icon {
-    font-size: 1.5rem;
-  }
-
-  .category-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0;
-  }
-
   .technologies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5rem;
   }
 
-  .tech-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-  }
-
-  .tech-icon {
-    font-size: 1.2rem;
-  }
-
-  .tech-name {
-    font-size: 0.8rem;
-    color: #e0e0e0;
-    font-weight: 500;
-  }
-
-  @media (max-width: 768px) {
-    .tech-stack-container {
-      gap: 1rem;
-    }
-
-    .tech-category {
-      padding: 1rem;
-    }
-
+  @media (min-width: 640px) {
     .technologies-grid {
       grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 0.5rem;
-    }
-
-    .tech-item {
-      padding: 0.4rem 0.6rem;
-    }
-
-    .category-title {
-      font-size: 1rem;
-    }
-
-    .tech-name {
-      font-size: 0.8rem;
+      gap: 0.75rem;
     }
   }
+
+  @media (min-width: 768px) {
+    .technologies-grid {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.75rem;
+    }
+  }
+
+  /* Keep minimal responsive grid adjustments */
 </style>

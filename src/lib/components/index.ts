@@ -5,3 +5,6 @@ export { default as LiquidGlass } from "./LiquidGlass.svelte";
 export { default as Footer } from "./Footer.svelte";
 export { default as TechStack } from "./TechStack.svelte";
 export { default as QASection } from "./QASection.svelte";
+export { default as ResponsiveContainer } from "./ResponsiveContainer.svelte";
+export { default as ResponsiveGrid } from "./ResponsiveGrid.svelte";
+export { default as ResponsiveImage } from "./ResponsiveImage.svelte";
