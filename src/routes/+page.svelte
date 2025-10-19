@@ -1,5 +1,6 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
+  import { onMount, onDestroy } from "svelte";
   import {
     Nav,
     LiquidGlass,
@@ -39,7 +40,8 @@
   let showTooltip = $state(false);
   // Flip card state
   let isFlipped = $state(false);
-  let autoFlipInterval = $state(null);
+  let autoFlipInterval: number | null = null;
+  let greetingInterval: number | null = null;
 
   // Function to toggle flip card
   function toggleFlip() {
@@ -88,8 +90,19 @@
     key += 1; // Update key to trigger transition
   }
 
-  // Set up interval to keep changing greetings
-  setInterval(changeGreeting, 4400);
+  // Set up interval to keep changing greetings with proper cleanup
+  onMount(() => {
+    greetingInterval = setInterval(changeGreeting, 4400);
+  });
+
+  onDestroy(() => {
+    if (greetingInterval) {
+      clearInterval(greetingInterval);
+    }
+    if (autoFlipInterval) {
+      clearInterval(autoFlipInterval);
+    }
+  });
 </script>
 
 <div class="relative">

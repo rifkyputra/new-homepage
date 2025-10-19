@@ -101,13 +101,24 @@
       type="button"
       class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[1000] animate-[fadeIn_0.3s_ease] border-0 p-0 cursor-pointer"
       onclick={closeMobileMenu}
+      onkeydown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+          closeMobileMenu();
+        }
+      }}
       aria-label="Close mobile menu"
     >
       <div
         class="absolute top-16 sm:top-20 left-1/2 transform -translate-x-1/2 w-[calc(100vw-2rem)] max-w-sm bg-[rgba(215,212,212,0.95)] backdrop-blur-xl border border-white/25 rounded-xl p-6 shadow-2xl animate-[slideDown_0.3s_ease]"
         onclick={(e) => e.stopPropagation()}
+        onkeydown={(e) => {
+          if (e.key === 'Escape') {
+            closeMobileMenu();
+          }
+        }}
         role="dialog"
         aria-label="Mobile navigation menu"
+        tabindex="-1"
       >
         <ul class="flex flex-col gap-4 list-none m-0 p-0">
           <li>
