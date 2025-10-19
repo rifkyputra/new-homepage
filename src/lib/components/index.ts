@@ -8,3 +8,5 @@ export { default as QASection } from "./QASection.svelte";
 export { default as ResponsiveContainer } from "./ResponsiveContainer.svelte";
 export { default as ResponsiveGrid } from "./ResponsiveGrid.svelte";
 export { default as ResponsiveImage } from "./ResponsiveImage.svelte";
+export { default as Greeting } from "./Greeting.svelte";
+export { default as GradientBackground } from "./GradientBackground.svelte";

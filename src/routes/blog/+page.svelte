@@ -3,14 +3,11 @@
   import { fade, fly } from "svelte/transition";
   import { formatDate, loadBlogPosts, type BlogPost } from "$lib/blog";
   import { Nav, Footer, GradientBackground } from "$lib/components";
-  import { onMount } from "svelte";
 
   let data = $state<{ posts: BlogPost[] }>({ posts: [] });
 
-  onMount(() => {
-    loadBlogPosts().then((posts) => {
-      data = { posts: posts || [] };
-    });
+  loadBlogPosts().then((posts) => {
+    data = { posts: posts || [] };
   });
 
   let searchQuery = $state("");
@@ -47,16 +44,14 @@
   );
 </script>
 
-<div
-  class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white"
->
+<GradientBackground class="variant-purple">
   <!-- Navigation -->
   <div class="flex justify-center pt-8">
     <Nav />
   </div>
 
   <!-- Main Content -->
-  <main class="container mx-auto px-6 py-12">
+  <main class="container mx-auto px-6 py-12 text-white">
     <!-- Hero Section -->
     <div class="text-center mb-16" in:fade={{ duration: 800 }}>
       <h1
@@ -250,7 +245,7 @@
     <!-- Footer -->
     <Footer class="mt-20" />
   </main>
-</div>
+</GradientBackground>
 
 <style>
   .featured-post {
