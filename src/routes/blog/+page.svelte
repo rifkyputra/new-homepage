@@ -3,11 +3,14 @@
   import { fade, fly } from "svelte/transition";
   import { formatDate, loadBlogPosts, type BlogPost } from "$lib/blog";
   import { Nav, Footer, GradientBackground } from "$lib/components";
+  import { onMount } from "svelte";
 
   let data = $state<{ posts: BlogPost[] }>({ posts: [] });
 
-  loadBlogPosts().then((posts) => {
-    data = { posts: posts || [] };
+  onMount(() => {
+    loadBlogPosts().then((posts) => {
+      data = { posts: posts || [] };
+    });
   });
 
   let searchQuery = $state("");
