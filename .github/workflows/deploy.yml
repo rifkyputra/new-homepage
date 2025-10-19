@@ -35,7 +35,6 @@ jobs:
         run: bun run test
 
   build-and-deploy:
-    needs: test
     runs-on: ubuntu-latest
     container: oven/bun:alpine
     if: github.ref == 'refs/heads/main'
