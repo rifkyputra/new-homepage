@@ -58,7 +58,7 @@
     <!-- Hero Section -->
     <div class="text-center mb-16" in:fade={{ duration: 800 }}>
       <h1
-        class="text-5xl font-bold mb-4 bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent"
+        class="text-5xl font-bold mb-4 bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent"
       >
         Blog & Insights
       </h1>
@@ -80,7 +80,7 @@
           type="text"
           placeholder="Search articles..."
           bind:value={searchQuery}
-          class=" pl-10 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg focus:outline-none focus:border-purple-400 transition-colors"
+          class=" pl-10 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg focus:outline-none focus:border-slate-400 transition-colors"
         />
       </div>
       <div class="flex flex-col md:flex-row gap-4 max-w-4xl">
@@ -92,8 +92,8 @@
             onclick={() => (selectedTag = "")}
             class="px-4 py-2 rounded-lg border transition-colors {selectedTag ===
             ''
-              ? 'bg-purple-600 border-purple-600'
-              : 'bg-white/10 border-white/20 hover:border-purple-400'}"
+              ? 'bg-slate-600 border-slate-600'
+              : 'bg-white/10 border-white/20 hover:border-slate-400'}"
           >
             All
           </button>
@@ -102,8 +102,8 @@
               onclick={() => (selectedTag = tag)}
               class="px-4 py-2 rounded-lg border transition-colors {selectedTag ===
               tag
-                ? 'bg-purple-600 border-purple-600'
-                : 'bg-white/10 border-white/20 hover:border-purple-400'}"
+                ? 'bg-slate-600 border-slate-600'
+                : 'bg-white/10 border-white/20 hover:border-slate-400'}"
             >
               {tag}
             </button>
@@ -117,7 +117,7 @@
       <section class="mb-16" in:fade={{ duration: 800, delay: 400 }}>
         <h2 class="text-2xl font-bold mb-6">Featured Article</h2>
         <article
-          class="featured-post bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-sm rounded-2xl p-8 border border-purple-400/30"
+          class="featured-post bg-gradient-to-r from-slate-600/20 to-blue-600/20 backdrop-blur-sm rounded-2xl p-8 border border-slate-400/30"
         >
           <div class="flex flex-col lg:flex-row gap-8">
             <div class="flex-1">
@@ -144,7 +144,7 @@
                 <div class="flex flex-wrap gap-2">
                   {#each featuredPost.metadata.tags as tag}
                     <span
-                      class="px-3 py-1 bg-purple-500/30 text-purple-200 rounded-full text-sm"
+                      class="px-3 py-1 bg-slate-500/30 text-gray-200 rounded-full text-sm"
                     >
                       {tag}
                     </span>
@@ -153,7 +153,7 @@
 
                 <a
                   href="/blog/{featuredPost.slug}"
-                  class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg transition-colors font-semibold"
+                  class="inline-flex items-center gap-2 px-6 py-3 bg-slate-600 hover:bg-slate-500 rounded-lg transition-colors font-semibold"
                 >
                   Read More
                   <ArrowRight class="w-4 h-4" />
@@ -171,7 +171,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {#each regularPosts as post, index}
           <article
-            class="blog-card bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-purple-400/50 transition-all duration-300 hover:transform hover:scale-105"
+            class="blog-card bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-slate-400/50 transition-all duration-300 hover:transform hover:scale-105"
             in:fly={{ y: 50, duration: 600, delay: index * 100 + 600 }}
           >
             <div class="flex items-center gap-4 mb-4 text-sm text-gray-400">
@@ -186,7 +186,7 @@
             </div>
 
             <h3
-              class="text-xl font-bold mb-3 leading-tight hover:text-purple-300 transition-colors"
+              class="text-xl font-bold mb-3 leading-tight hover:text-slate-300 transition-colors"
             >
               <a href="/blog/{post.slug}">
                 {post.metadata.title}
@@ -200,7 +200,7 @@
             <div class="flex flex-wrap gap-2 mb-4">
               {#each post.metadata.tags as tag}
                 <span
-                  class="px-2 py-1 bg-purple-500/20 text-purple-200 rounded-full text-xs"
+                  class="px-2 py-1 bg-slate-500/20 text-gray-200 rounded-full text-xs"
                 >
                   {tag}
                 </span>
@@ -209,7 +209,7 @@
 
             <a
               href="/blog/{post.slug}"
-              class="inline-flex items-center gap-2 text-purple-300 hover:text-purple-200 transition-colors font-semibold text-sm"
+              class="inline-flex items-center gap-2 text-slate-300 hover:text-slate-200 transition-colors font-semibold text-sm"
             >
               Read More
               <ArrowRight class="w-4 h-4" />
@@ -234,10 +234,10 @@
           <input
             type="email"
             placeholder="Enter your email"
-            class="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-purple-400 transition-colors"
+            class="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-slate-400 transition-colors"
           />
           <button
-            class="px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg transition-colors font-semibold"
+            class="px-6 py-3 bg-slate-600 hover:bg-slate-500 rounded-lg transition-colors font-semibold"
           >
             Subscribe
           </button>
@@ -254,7 +254,7 @@
   .featured-post {
     background: linear-gradient(
       135deg,
-      rgba(147, 51, 234, 0.2),
+      rgba(33, 30, 36, 0.2),
       rgba(59, 130, 246, 0.2)
     );
     border: 1px solid rgba(147, 51, 234, 0.3);

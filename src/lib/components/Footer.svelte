@@ -21,7 +21,7 @@
       <!-- Navigation Links -->
       <div>
         <h3
-          class="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-purple-200"
+          class="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-slate-200"
         >
           Navigation
         </h3>
@@ -29,14 +29,14 @@
           <li>
             <a
               href="/"
-              class="text-gray-300 hover:text-purple-300 transition-colors text-sm sm:text-base"
+              class="text-gray-300 hover:text-slate-300 transition-colors text-sm sm:text-base"
               >Home</a
             >
           </li>
           <li>
             <a
               href="/blog"
-              class="text-gray-300 hover:text-purple-300 transition-colors text-sm sm:text-base"
+              class="text-gray-300 hover:text-slate-300 transition-colors text-sm sm:text-base"
               >Blog</a
             >
           </li>
@@ -60,7 +60,7 @@
       <!-- Quick Contact -->
       <div>
         <h3
-          class="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-purple-200"
+          class="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-slate-200"
         >
           Let's Connect
         </h3>
@@ -71,7 +71,7 @@
         </p>
         <a
           href="/links"
-          class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-600/50 hover:bg-purple-500/50 rounded-lg transition-colors text-xs sm:text-sm"
+          class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-slate-600/50 hover:bg-slate-500/50 rounded-lg transition-colors text-xs sm:text-sm"
         >
           <ExternalLink class="w-3 h-3 sm:w-4 sm:h-4" />
           View All Links
@@ -81,28 +81,28 @@
       <!-- Tech Stack -->
       <div class="sm:col-span-2 lg:col-span-1">
         <h3
-          class="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-purple-200"
+          class="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-slate-200"
         >
           Built With
         </h3>
         <div class="flex flex-wrap gap-1.5 sm:gap-2">
           <span
-            class="px-2 py-1 bg-purple-500/20 text-purple-200 rounded-full text-xs"
+            class="px-2 py-1 bg-slate-500/20 text-slate-200 rounded-full text-xs"
           >
             SvelteKit
           </span>
           <span
-            class="px-2 py-1 bg-purple-500/20 text-purple-200 rounded-full text-xs"
+            class="px-2 py-1 bg-slate-500/20 text-slate-200 rounded-full text-xs"
           >
             TypeScript
           </span>
           <span
-            class="px-2 py-1 bg-purple-500/20 text-purple-200 rounded-full text-xs"
+            class="px-2 py-1 bg-slate-500/20 text-slate-200 rounded-full text-xs"
           >
             Tailwind CSS
           </span>
           <span
-            class="px-2 py-1 bg-purple-500/20 text-purple-200 rounded-full text-xs"
+            class="px-2 py-1 bg-slate-500/20 text-slate-200 rounded-full text-xs"
           >
             Vite
           </span>
