@@ -1,0 +1,658 @@
+---
+title: "My Docker Deployment Strategy"
+excerpt: "latest favorite strategy regarding docker deployment on Ubuntu Server"
+author: "Rifky Adni Putra"
+date: "2025-12-10"
+readTime: "15 min read"
+tags: ["Docker", "Kubernetes", "Github", "Github Action", "Spring Boot"]
+featured: true
+slug: "docker-deployment"
+---
+
+
+# From Local Development to Production VPS: A Multi-Environment Docker Deployment Strategy
+
+## Introduction
+
+Deploying microservices across different environments can be challenging. In this post, I'll share my experience deploying a microservices architecture using Docker Compose for both local development and production VPS, with GitHub Actions for automated builds and Kubernetes configurations ready for future scaling.
+
+The key insight: **use the same Docker images everywhere, but different orchestration configs per environment**.
+
+## Architecture Overview
+
+My deployment strategy uses:
+- **GitHub Actions** for automated CI/CD and image building
+- **GitHub Container Registry (GHCR)** for storing Docker images
+- **Docker Compose** for local development and VPS production
+- **Kubernetes manifests** prepared for future horizontal scaling
+
+The application consists of multiple services:
+- Spring Boot authentication service (Java)
+- REST API service (Go)
+- WebSocket session service (Go)
+- PostgreSQL database
+- Redis cache
+- Traefik reverse proxy
+
+## Part 1: Automated Image Building with GitHub Actions
+
+### Setting Up the Build Pipeline
+
+First, I created a GitHub Actions workflow that builds Docker images whenever I push code. The workflow is triggered only when the commit message contains `--build` to avoid unnecessary builds.
+
+**Key workflow file: `.github/workflows/build.yml`**
+
+```yaml
+name: Build and Test
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-auth-service:
+    name: Build Auth Service (Java/Spring Boot)
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '--build')
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: maven
+
+      - name: Build with Maven
+        working-directory: ./auth-service
+        run: mvn clean package -DskipTests
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./auth-service
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/auth-service:latest
+```
+
+The workflow automatically:
+1. Compiles the application
+2. Runs tests
+3. Builds Docker images
+4. Pushes images to GitHub Container Registry
+
+**Pro tip**: Use `${{ secrets.GITHUB_TOKEN }}` which is automatically available in GitHub Actions - no manual secret creation needed for pushing to GHCR!
+
+### Release Pipeline for Versioned Deployments
+
+For production releases, I use a separate workflow triggered by Git tags:
+
+```yaml
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build-and-release:
+    steps:
+      - name: Extract version
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Build and push versioned images
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/auth-service:${{ steps.version.outputs.VERSION }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/auth-service:latest
+```
+
+This creates both versioned tags (e.g., `v1.0.0`) and `latest` tags.
+
+**To trigger a release:**
+```bash
+git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin v1.0.0
+```
+
+## Part 2: Local Development with Docker Compose
+
+### Development Configuration
+
+For local development, I use `docker/docker-compose.yml` which **builds images locally** from source:
+
+```yaml
+version: "3.9"
+
+services:
+  auth-service:
+    build:
+      context: ../auth-service
+      dockerfile: Dockerfile
+    container_name: soundboard-auth-service
+    environment:
+      DB_HOST: postgres
+      JWT_SECRET: ${JWT_SECRET:-your-secret-key-change-in-production}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auth-service.rule=PathPrefix(`/auth`)"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - soundboard-network
+```
+
+**Key differences in dev config:**
+- Uses `build:` directive to compile from source
+- Default environment variables for quick setup
+- Debug-level logging
+- No restart policies (fails fast for debugging)
+
+### Running Locally
+
+```bash
+cd docker
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Test the services
+curl http://localhost/auth/health
+```
+
+The development setup uses Traefik for routing, matching the production setup exactly.
+
+## Part 3: Production Deployment on Ubuntu VPS
+
+### Creating a GitHub Personal Access Token
+
+To pull private images from GHCR on your VPS, you need a Personal Access Token:
+
+1. Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Click "Generate new token (classic)"
+3. Select scopes:
+   - `read:packages` - Download packages from GitHub Package Registry
+   - `write:packages` - Upload packages to GitHub Package Registry (if needed)
+4. Generate token and **save it securely**
+
+### Production Configuration
+
+The production config (`docker/docker-compose.prod.yml`) uses **pre-built images** from GHCR:
+
+```yaml
+version: "3.9"
+
+services:
+  auth-service:
+    image: ghcr.io/rifkyputra/soundboard-api/auth-service:${IMAGE_TAG:-latest}
+    container_name: soundboard-auth-service
+    environment:
+      DB_HOST: postgres
+      JWT_SECRET: ${JWT_SECRET}  # No default - must be set!
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auth-service.rule=PathPrefix(`/auth`)"
+```
+
+**Key differences in production:**
+- Uses `image:` instead of `build:`
+- `restart: unless-stopped` for automatic recovery
+- INFO-level logging (not DEBUG)
+- No default secrets (fails if not configured)
+- Version pinning via `IMAGE_TAG` environment variable
+
+### VPS Deployment Steps
+
+**1. Prepare the VPS (Ubuntu 22.04)**
+
+```bash
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+# Install Docker Compose
+sudo apt install docker-compose-plugin
+
+# Add user to docker group
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+**2. Login to GitHub Container Registry**
+
+```bash
+# Use your GitHub username and the token you created
+echo YOUR_GITHUB_TOKEN | docker login ghcr.io -u YOUR_GITHUB_USERNAME --password-stdin
+```
+
+You should see: `Login Succeeded`
+
+**3. Clone and Configure**
+
+```bash
+# Clone your repository
+git clone https://github.com/rifkyputra/soundboard-api.git
+cd soundboard-api/docker
+
+# Create production environment file
+cat > .env.prod << EOF
+# Database Configuration
+DB_USER=postgres
+DB_PASSWORD=$(openssl rand -base64 32)
+DB_NAME=soundboard_db
+
+# JWT Secret - MUST be strong in production
+JWT_SECRET=$(openssl rand -base64 64)
+
+# Image Version
+IMAGE_TAG=latest  # or use specific version like v1.0.0
+EOF
+
+# Secure the env file
+chmod 600 .env.prod
+```
+
+**4. Pull Images and Start Services**
+
+```bash
+# Pull latest images from GHCR
+docker compose -f docker-compose.prod.yml --env-file .env.prod pull
+
+# Start all services
+docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
+
+# Check status
+docker compose -f docker-compose.prod.yml ps
+
+# View logs
+docker compose -f docker-compose.prod.yml logs -f
+```
+
+**5. Verify Deployment**
+
+```bash
+# Check health endpoints
+curl http://localhost/auth/health
+curl http://localhost/api/health
+
+# View Traefik dashboard
+curl http://localhost:8080/api/http/routers
+```
+
+### Updating Production
+
+When you release a new version:
+
+```bash
+# Update IMAGE_TAG in .env.prod
+vim .env.prod  # Change IMAGE_TAG=v1.0.1
+
+# Pull new images
+docker compose -f docker-compose.prod.yml --env-file .env.prod pull
+
+# Recreate containers with zero downtime
+docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
+
+# Verify
+docker compose -f docker-compose.prod.yml ps
+```
+
+### Rollback Strategy
+
+If something goes wrong:
+
+```bash
+# Set previous version
+echo "IMAGE_TAG=v1.0.0" >> .env.prod
+
+# Pull and restart
+docker compose -f docker-compose.prod.yml --env-file .env.prod pull
+docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
+```
+
+## Part 4: Kubernetes for Future Scaling
+
+While Docker Compose works great for single-server deployments, I've prepared Kubernetes manifests for when horizontal scaling is needed.
+
+### Namespace and ConfigMap
+
+**`k8s/namespace.yaml`**
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: soundboard
+```
+
+**`k8s/configmap.yaml`**
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: soundboard
+data:
+  DB_HOST: postgres-service
+  DB_PORT: "5432"
+  DB_NAME: soundboard_db
+  REDIS_HOST: redis-service
+  REDIS_PORT: "6379"
+```
+
+### Deployment Configuration
+
+**`k8s/auth-service-deployment.yaml`**
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: soundboard
+spec:
+  replicas: 2  # High availability
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    spec:
+      containers:
+      - name: auth-service
+        image: ghcr.io/rifkyputra/soundboard-api/auth-service:latest
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: db-credentials
+        livenessProbe:
+          httpGet:
+            path: /auth/actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: soundboard
+spec:
+  selector:
+    app: auth-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+```
+
+### Traefik Ingress Routes
+
+**`k8s/traefik-ingressroute.yaml`**
+```yaml
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: soundboard-auth-route
+  namespace: soundboard
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: PathPrefix(`/auth`)
+    kind: Rule
+    services:
+    - name: auth-service
+      port: 8080
+```
+
+### Deploying to Kubernetes
+
+```bash
+# Create namespace
+kubectl apply -f k8s/namespace.yaml
+
+# Create secrets (base64 encoded)
+kubectl create secret generic db-credentials \
+  --from-literal=DB_USER=postgres \
+  --from-literal=DB_PASSWORD=your-password \
+  -n soundboard
+
+kubectl create secret generic jwt-secret \
+  --from-literal=JWT_SECRET=your-jwt-secret \
+  -n soundboard
+
+# Apply configurations
+kubectl apply -f k8s/configmap.yaml
+kubectl apply -f k8s/postgres-deployment.yaml
+kubectl apply -f k8s/redis-deployment.yaml
+
+# Deploy services
+kubectl apply -f k8s/auth-service-deployment.yaml
+kubectl apply -f k8s/soundboard-api-deployment.yaml
+kubectl apply -f k8s/session-service-deployment.yaml
+
+# Setup ingress
+kubectl apply -f k8s/traefik-ingressroute.yaml
+
+# Check status
+kubectl get pods -n soundboard
+kubectl get services -n soundboard
+kubectl get ingressroute -n soundboard
+```
+
+### Horizontal Pod Autoscaling
+
+For automatic scaling based on load:
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: auth-service-hpa
+  namespace: soundboard
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: auth-service
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+```
+
+## Best Practices and Lessons Learned
+
+### 1. Environment Variable Management
+
+**DO:**
+
+- Use `.env` files for local development
+- Use secrets management in production (K8s secrets, Vault, etc.)
+- Never commit secrets to Git
+- Generate strong random secrets: `openssl rand -base64 64`
+
+**DON'T:**
+
+- Hardcode secrets in Docker Compose files
+- Use default passwords in production
+- Share the same secrets across environments
+
+### 2. Image Tagging Strategy
+
+```bash
+# Development: Use latest
+IMAGE_TAG=latest
+
+# Staging: Use commit SHA
+IMAGE_TAG=sha-abc123
+
+# Production: Use semantic versioning
+IMAGE_TAG=v1.0.0
+```
+
+### 3. Health Checks
+
+Always implement health checks in:
+- Docker Compose: `healthcheck:`
+- Kubernetes: `livenessProbe:` and `readinessProbe:`
+- Application: dedicated `/health` endpoint
+
+### 4. Resource Limits
+
+Set appropriate limits to prevent resource exhaustion:
+
+```yaml
+resources:
+  requests:  # Guaranteed resources
+    memory: "256Mi"
+    cpu: "250m"
+  limits:    # Maximum allowed
+    memory: "512Mi"
+    cpu: "500m"
+```
+
+### 5. Logging Strategy
+
+- **Development**: DEBUG level, stdout
+- **Production**: INFO level, structured JSON logs
+- Use log aggregation (ELK, Loki) in production
+
+### 6. Database Persistence
+
+Always use volumes for stateful services:
+
+```yaml
+volumes:
+  postgres_data:
+  redis_data:
+```
+
+Backup regularly:
+
+```bash
+docker exec postgres pg_dump -U postgres soundboard_db > backup.sql
+```
+
+## Comparison: Docker Compose vs Kubernetes
+
+| Feature | Docker Compose | Kubernetes |
+|---------|---------------|------------|
+| **Setup Complexity** | Low | High |
+| **Learning Curve** | Gentle | Steep |
+| **Single Server** | Excellent | Overkill |
+| **Multi-Server** | Limited | Excellent |
+| **Auto-scaling** | No | Yes (HPA) |
+| **Self-healing** | Limited | Robust |
+| **Rolling Updates** | Manual | Automatic |
+| **Cost** | Low | Higher |
+| **Best For** | Small apps, dev | Production at scale |
+
+**My recommendation:**
+
+- Start with Docker Compose for MVP and small deployments
+- Prepare K8s configs early (like I did)
+- Migrate to K8s when you need:
+  - Multiple servers
+  - Auto-scaling
+  - High availability
+  - Advanced deployment strategies
+
+## Monitoring and Maintenance
+
+### Docker Compose Monitoring
+
+```bash
+# View resource usage
+docker stats
+
+# Check logs
+docker compose -f docker-compose.prod.yml logs -f
+
+# Restart specific service
+docker compose -f docker-compose.prod.yml restart auth-service
+```
+
+### Kubernetes Monitoring
+
+```bash
+# Pod status
+kubectl get pods -n soundboard
+
+# Detailed pod info
+kubectl describe pod <pod-name> -n soundboard
+
+# Logs
+kubectl logs -f deployment/auth-service -n soundboard
+
+# Resource usage
+kubectl top pods -n soundboard
+```
+
+## Conclusion
+
+This multi-environment deployment strategy provides:
+
+✅ **Consistency**: Same Docker images across all environments  
+✅ **Flexibility**: Different orchestration per environment  
+✅ **Scalability**: Kubernetes ready when needed  
+✅ **Automation**: GitHub Actions handles builds  
+✅ **Security**: Proper secrets management  
+✅ **Reliability**: Health checks and restart policies  
+
+**Key takeaways:**
+1. Automate image building with GitHub Actions
+2. Use GHCR for private image hosting (free!)
+3. Separate configs for dev and prod
+4. Prepare for scale with K8s manifests
+5. Never compromise on secrets and monitoring
+
+The beauty of this approach is that it scales with your needs - start simple with Docker Compose, and when traffic demands it, you're already prepared with Kubernetes configurations.
+
+---
+
+**Repository**: **private** [soundboard-api](https://github.com/rifkyputra/soundboard-api)
+
+**Tech Stack**: Spring Boot, Go, PostgreSQL, Redis, Traefik, Docker, Kubernetes
+
+**Deployment**: Local dev + Ubuntu VPS  (K8s ready)

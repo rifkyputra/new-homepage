@@ -5,7 +5,7 @@ author: "Rifky Adni Putra"
 date: "2025-10-16"
 readTime: "8 min read"
 tags: ["React", "Next.js", "Server Components", "web development", "framework"]
-featured: true
+featured: false
 slug: "react-future-nextjs-shadow"
 ---
 
