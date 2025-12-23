@@ -1,0 +1,132 @@
+---
+title: "Introducing Dockyy: A Modern Docker Management Dashboard"
+excerpt: "As developers, we often find ourselves juggling multiple Docker containers, managing various Git repositories, and orchestrating complex multi-container applications. While Docker Desktop provides basic container management, I wanted something more powerful—a unified dashboard that combines container orchestration, Git repository management, and infrastructure tooling in one place. That's how **Dockyy** was born."
+author: "Rifky Adni Putra"
+date: "2025-12-23"
+readTime: "4 min read"
+tags: ["Docker", "Cloudflare", "react", "pyhton", "framework", "open source"]
+featured: false
+slug: "dockyy-intro"
+---
+
+As developers, we often find ourselves juggling multiple Docker containers, managing various Git repositories, and orchestrating complex multi-container applications. While Docker Desktop provides basic container management, I wanted something more powerful—a unified dashboard that combines container orchestration, Git repository management, and infrastructure tooling in one place. That's how **Dockyy** was born.
+
+Managing modern development environments is challenging. You're switching between Docker Desktop for containers, the terminal for Git operations, Docker Compose CLI for multi-container apps, and various cloud services dashboards. Each tool lives in its own silo, making it difficult to maintain a holistic view of your development infrastructure.
+
+I wanted a single interface where I could:
+- Monitor and control all my Docker containers
+- Manage Docker Compose projects with a click
+- Perform Git operations without leaving the dashboard
+- Configure Cloudflare Tunnels for exposing local services
+- View project READMEs and documentation instantly
+
+## The Solution: Dockyy
+
+Dockyy is a modern, self-hosted Docker management dashboard that brings all these capabilities together. It's built with a focus on developer experience, using cutting-edge technologies and a clean, intuitive interface.
+
+### Key Features
+
+**🐳 Comprehensive Docker Management**  
+View all your containers at a glance with real-time status updates. Start, stop, restart, or remove containers with a single click. Access container logs directly in the browser without switching to the terminal.
+
+**📦 Docker Compose Project Orchestration**  
+Manage your multi-container applications effortlessly. Bring projects up or down, restart services, and monitor the health of your entire stack from one dashboard.
+
+**📂 Integrated Git Repository Management**  
+Clone repositories, pull the latest changes, push commits, and view diffs—all from the web interface. Support for private repositories with SSH authentication means you can manage your entire codebase without opening a terminal.
+
+**🌐 Cloudflare Tunnel Integration**  
+Configure and manage cloudflared tunnels directly from the dashboard. Expose your local services to the internet securely, perfect for sharing development previews or setting up webhooks.
+
+**📝 Built-in Documentation Viewer**  
+View repository README files directly in the dashboard with full Markdown rendering. No need to clone a repo just to check its documentation.
+
+## Technical Architecture
+
+### Modern Frontend Stack
+
+The frontend is built with **React 18** and **TypeScript**, providing type safety and excellent developer experience. I chose **Bun** as the package manager for its blazing-fast performance—dependency installation is nearly instantaneous.
+
+**TailwindCSS 4** and **DaisyUI** power the UI, offering a beautiful, responsive design system out of the box. For state management and server synchronization, **TanStack Query** handles all the heavy lifting, providing automatic caching, background refetching, and optimistic updates.
+
+**Vite** serves as the build tool, delivering near-instant hot module replacement during development and optimized production bundles.
+
+### Robust Backend
+
+The backend is a **Flask 3** REST API that leverages the official **Docker Python SDK** for container management. This provides a reliable, well-documented interface for all Docker operations.
+
+For persistence, I chose **Turso** (LibSQL) with **SQLAlchemy**—a modern, edge-compatible database that's perfect for self-hosted applications. **Alembic** handles database migrations, making schema evolution seamless.
+
+Authentication uses **JWT tokens** for stateless, secure API access. The design allows for easy extension to more sophisticated auth systems as needed.
+
+### Developer-First Tooling
+
+I embraced modern Python tooling with **UV** for dependency management and virtual environments. It's significantly faster than traditional pip and poetry, making the development loop more enjoyable.
+
+Git operations are handled via subprocess calls, giving full control over Git functionality without adding heavy dependencies. Cloudflare Tunnel integration follows a similar pattern, directly interfacing with the `cloudflared` CLI.
+
+## Design Decisions
+
+### Why a Pure Client-Side Frontend?
+
+I opted for a pure client-side React app (no SSR) for simplicity and deployment flexibility. Since this is a self-hosted tool intended for personal or team use rather than a public-facing application, the benefits of SSR (SEO, initial load performance) are less critical. This approach also makes deployment trivial—just serve static files.
+
+### Database Choice: Turso/LibSQL
+
+Turso provides the simplicity of SQLite with the option to scale if needed. The database file is easy to backup, and SQLAlchemy provides a familiar ORM interface.
+
+## Real-World Use Cases
+
+**Development Team Dashboards**  
+Set up Dockyy on a shared development server. Your entire team can view container status, restart services that crashed, and check git status across multiple projects—all without SSH access.
+
+**Demo Environment Management**  
+Manage multiple Docker Compose stacks for different demo environments. Quickly spin up or tear down environments, expose them via Cloudflare Tunnels, and share with clients.
+
+**Local Development Orchestration**  
+Even for solo developers, having a unified dashboard beats juggling Docker Desktop, multiple terminal tabs, and Git GUI tools. Everything you need is in one place.
+
+## What's Next?
+
+The project is fully functional today, but there's always room for improvement:
+
+- **Container Metrics**: CPU, memory, and network usage graphs
+- **Multi-Server Support**: Manage Docker hosts on different machines
+- **Webhook Automation**: Trigger deployments on Git push events
+- **Log Search & Filtering**: More powerful log analysis tools
+- **Team Collaboration**: Multi-user support with granular permissions
+
+## Try It Yourself
+
+Dockyy is open-source and ready to deploy. With Bun, UV, and modern tooling, setup takes just a few minutes:
+
+```bash
+# Clone the repository
+git clone https://github.com/rifkyputra/dockyy.git
+cd dockyy
+
+# Backend setup
+cd backend
+uv sync
+python migrate.py upgrade
+uv run python -m app
+
+# Frontend setup (in another terminal)
+cd frontend
+bun install
+bun run dev
+```
+
+Point your browser to `http://localhost:3000`, and you're ready to manage your Docker infrastructure from a beautiful, modern dashboard.
+
+## Conclusion
+
+Building Dockyy has been an exercise in combining the best of modern web development with practical DevOps needs. It's a tool I use daily, and I hope it makes your development workflow smoother too.
+
+The beauty of self-hosted tools is that they grow with your needs. Whether you're a solo developer or managing a team's infrastructure, Dockyy provides a solid foundation that you can customize and extend.
+
+Have questions or want to contribute? The codebase is open, well-documented, and waiting for your pull requests!
+
+---
+
+*Built with ❤️ using React, Flask, Docker, and modern developer tools*

@@ -4,15 +4,12 @@ excerpt: "latest favorite strategy regarding docker deployment on Ubuntu Server"
 author: "Rifky Adni Putra"
 date: "2025-12-10"
 readTime: "15 min read"
-tags: ["Docker", "Kubernetes", "Github", "Github Action", "Spring Boot"]
+tags: ["Docker", "Kubernetes", "Github", "Github Action", "Spring Boot", "microservice", "DevOps"]
 featured: true
 slug: "docker-deployment"
 ---
 
 
-# From Local Development to Production VPS: A Multi-Environment Docker Deployment Strategy
-
-## Introduction
 
 Deploying microservices across different environments can be challenging. In this post, I'll share my experience deploying a microservices architecture using Docker Compose for both local development and production VPS, with GitHub Actions for automated builds and Kubernetes configurations ready for future scaling.
 
