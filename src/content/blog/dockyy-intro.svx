@@ -8,9 +8,6 @@ tags: ["Docker", "Cloudflare", "react", "pyhton", "framework", "open source"]
 featured: false
 slug: "dockyy-intro"
 ---
-
-As developers, we often find ourselves juggling multiple Docker containers, managing various Git repositories, and orchestrating complex multi-container applications. While Docker Desktop provides basic container management, I wanted something more powerful—a unified dashboard that combines container orchestration, Git repository management, and infrastructure tooling in one place. That's how **Dockyy** was born.
-
 Managing modern development environments is challenging. You're switching between Docker Desktop for containers, the terminal for Git operations, Docker Compose CLI for multi-container apps, and various cloud services dashboards. Each tool lives in its own silo, making it difficult to maintain a holistic view of your development infrastructure.
 
 I wanted a single interface where I could:
