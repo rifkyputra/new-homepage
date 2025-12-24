@@ -100,6 +100,8 @@ The project is fully functional today, but there's always room for improvement:
 
 Dockyy is open-source and ready to deploy. With Bun, UV, and modern tooling, setup takes just a few minutes:
 
+**🔗 GitHub Repository**: [github.com/rifkyputra/dockyy](https://github.com/rifkyputra/dockyy)
+
 ```bash
 # Clone the repository
 git clone https://github.com/rifkyputra/dockyy.git
@@ -129,4 +131,6 @@ Have questions or want to contribute? The codebase is open, well-documented, and
 
 ---
 
-*Built with ❤️ using React, Flask, Docker, and modern developer tools*
+Try Now
+
+**🔗 GitHub Repository**: [github.com/rifkyputra/dockyy](https://github.com/rifkyputra/dockyy)
