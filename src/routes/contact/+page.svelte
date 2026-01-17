@@ -1,32 +1,50 @@
 <script lang="ts">
   import { Mail } from "@lucide/svelte";
-  import { enhance } from "$app/forms";
   import { Nav, Footer, GradientBackground } from "$lib/components";
+
+  const BACKEND_URL = 'https://backend.ky.pir.my.id'; // Update with your backend URL
 
   let submitting = false;
   let success = false;
   let error: string | null = null;
 
-  function handle({ result }: { result: Promise<any> }) {
+  async function handleSubmit(event: Event) {
+    event.preventDefault();
     submitting = true;
-    result
-      .then((res) => {
-        res.then((data: any) => {
-          submitting = false;
-          if (data.type === "success") {
-            success = true;
-            error = null;
-          } else {
-            success = false;
-            error = "Something went wrong. Please try again.";
-          }
-        });
-      })
-      .catch(() => {
-        submitting = false;
-        success = false;
-        error = "Something went wrong. Please try again.";
+    error = null;
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    const data = {
+      name: formData.get('name')?.toString().trim() || '',
+      email: formData.get('email')?.toString().trim() || '',
+      message: formData.get('message')?.toString().trim() || '',
+    };
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        success = true;
+        form.reset();
+      } else {
+        error = result.error || 'Something went wrong. Please try again.';
+      }
+    } catch (err) {
+      console.error('Contact form error:', err);
+      error = 'Failed to send message. Please try again.';
+    } finally {
+      submitting = false;
+    }
   }
 </script>
 
@@ -53,7 +71,7 @@
           <p class="text-gray-300">I'll reply to you shortly.</p>
         </div>
       {:else}
-        <form method="post" use:enhance={handle} class="space-y-4 bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+        <form on:submit={handleSubmit} class="space-y-4 bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
           <div>
             <label class="block text-sm font-medium text-gray-200 mb-2">Name</label>
             <input name="name" required class="w-full rounded-lg bg-transparent border border-white/20 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500" />
