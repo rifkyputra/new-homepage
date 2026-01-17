@@ -1,0 +1,23 @@
+{
+  "name": "@rifky/backend",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:worker": "wrangler dev --local --persist --watch",
+    "build": "tsc -p tsconfig.json",
+    "build:worker": "tsc -p tsconfig.json && node dist/worker.js",
+    "deploy:worker": "wrangler publish"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "@hono/node-server": "^1.19.9",
+    "resend": "^3.0.0",
+    "hono-rate-limiter": "^0.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "wrangler": "^3.5.0",
+    "@cloudflare/workers-types": "^4.2026.0"
+  }
+}

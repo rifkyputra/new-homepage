@@ -25,6 +25,17 @@ npm run dev
 npm run dev -- --open
 ```
 
+### Backend (Cloudflare Worker)
+
+This repository includes a small `@rifky/backend` package (Hono) ready to run on Cloudflare Workers.
+
+- Install workspace deps: `bun install`
+- Run the worker locally: `cd packages/backend && bun run dev:worker` (requires `wrangler`)
+- Build worker: `cd packages/backend && bun run build:worker`
+- Publish: `cd packages/backend && bun run deploy:worker` (set `account_id` in `packages/backend/wrangler.toml` first)
+
+See `packages/backend/CF_DEPLOY.md` for more notes.
+
 ## Building
 
 To create a production version of your app:

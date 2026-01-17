@@ -44,7 +44,7 @@
             <a
               href="/my-projects"
               class="text-gray-300 hover:text-purple-300 transition-colors text-sm sm:text-base"
-              >Projects</a
+              >Portfolio</a
             >
           </li>
           <li>

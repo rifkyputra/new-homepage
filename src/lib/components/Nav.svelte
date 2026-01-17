@@ -66,7 +66,7 @@
         <a
           href="/my-projects"
           class="no-underline text-white transition-opacity duration-300 hover:opacity-80 whitespace-nowrap"
-          >My Projects</a
+          >Portfolio</a
         >
       </li>
       <li>
@@ -126,7 +126,7 @@
               href="/my-projects"
               onclick={closeMobileMenu}
               class="block p-4 no-underline text-white text-center rounded-xl font-medium transition-colors duration-300 hover:bg-white/10"
-              >My Projects</a
+              >Portfolio</a
             >
           </li>
           <li>

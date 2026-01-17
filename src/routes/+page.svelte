@@ -1,6 +1,8 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
   import { onMount, onDestroy } from "svelte";
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
   import {
     Nav,
     LiquidGlass,
@@ -12,58 +14,82 @@
   } from "$lib/components";
   import hero from "$lib/assets/hero.jpg";
 
-  // Flip card state
-  let isFlipped = $state(false);
-  let autoFlipInterval: number | null = null;
-
-  // Function to toggle flip card
-  function toggleFlip() {
-    isFlipped = !isFlipped;
-    // Clear auto-flip when manually controlled
-    if (autoFlipInterval) {
-      clearInterval(autoFlipInterval);
-      autoFlipInterval = null;
-    }
-  }
-
-  // Function to flip to front
-  function flipToFront() {
-    isFlipped = false;
-  }
-
-  // Function to flip to back
-  function flipToBack() {
-    isFlipped = true;
-  }
-
-  // Function to stop auto-flip
-  function stopAutoFlip() {
-    if (autoFlipInterval) {
-      clearInterval(autoFlipInterval);
-      autoFlipInterval = null;
-    }
-  }
-
-  // Expose functions to global scope for console control
-  if (typeof window !== "undefined") {
-    (window as any).flipCard = {
-      toggle: toggleFlip,
-      toFront: flipToFront,
-      toBack: flipToBack,
-      stopAuto: stopAutoFlip,
-      getState: () => isFlipped,
-    };
-  }
+  // Register GSAP plugins
+  gsap.registerPlugin(ScrollTrigger);
 
   // Set up auto-flip (removed greeting interval since it's now in Greeting component)
   onMount(() => {
-    // Auto-flip is handled by the component, no setup needed here
+    // Nav wrapper animation
+    gsap.from(".nav-gsap-wrapper", {
+      y: -100,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: 0.5
+    });
+
+    // Hero section animations
+    gsap.from(".hero-title", {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+      ease: "power3.out",
+      delay: 0.3
+    });
+
+    gsap.from(".hero-background", {
+      scale: 1.2,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power2.out"
+    });
+
+    // Animate the about section with liquid glass
+    gsap.from(".about-section", {
+      scrollTrigger: {
+        trigger: ".about-section",
+        start: "top 80%",
+        end: "top 20%",
+        toggleActions: "play none none reverse"
+      },
+      opacity: 0,
+      y: 80,
+      duration: 1,
+      ease: "power3.out"
+    });
+
+    
+
+    // Animate Q&A section
+    gsap.from(".qa-section", {
+      scrollTrigger: {
+        trigger: ".qa-section",
+        start: "top 80%",
+        end: "top 20%",
+        toggleActions: "play none none reverse"
+      },
+      opacity: 0,
+      y: 60,
+      duration: 1,
+      ease: "power3.out"
+    });
+
+    // Parallax effect for hero background
+    gsap.to(".hero-background", {
+      scrollTrigger: {
+        trigger: ".wrapper",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      },
+      y: 200,
+      ease: "none"
+    });
   });
 
   onDestroy(() => {
-    if (autoFlipInterval) {
-      clearInterval(autoFlipInterval);
-    }
+    // Clean up ScrollTrigger instances
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
   });
 </script>
 
@@ -73,12 +99,12 @@
   >
     <!-- Hero Section -->
     <div
-      class="w-full h-[calc(60vh+8rem)] lg:h-[calc(100vh-8rem)] absolute inset-0 bg-cover bg-center animate-[filterCycle_4s_ease-in-out_infinite]"
+      class="hero-background w-full h-[calc(60vh+8rem)] lg:h-[calc(100vh-8rem)] absolute inset-0 bg-cover bg-center animate-[filterCycle_4s_ease-in-out_infinite]"
       style="background: url({hero}) no-repeat center center;background-size: cover;"
     ></div>
 
     <div
-      class="flex flex-col items-center justify-center mt-20 mb-10 z-10 px-4"
+      class="hero-title flex flex-col items-center justify-center mt-20 mb-10 z-10 px-4"
     >
       <Greeting />
       <div class="text-center px-4">
@@ -88,11 +114,13 @@
       </div>
     </div>
 
-    <Nav />
+    <div class="nav-gsap-wrapper w-full sticky top-3 z-[99]">
+      <Nav />
+    </div>
 
     <main>
       <section
-        class="w-full flex items-center justify-center px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24 lg:mt-40 mb-16 sm:mb-24 lg:mb-40"
+        class="about-section w-full flex items-center justify-center px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24 lg:mt-40 mb-16 sm:mb-24 lg:mb-40"
         aria-labelledby="about-section-title"
       >
       <div
@@ -107,164 +135,28 @@
             type="div"
             background="black"
           >
-          
-          <button
-          onclick={toggleFlip}
-          class="w-10 h-6 z-100 absolute bottom-3 right-3 text-sm text-white/70 italic cursor-pointer select-none"
-          aria-label="Flip card to show {isFlipped ? 'about me' : 'developer ID'}"
-          aria-expanded={isFlipped}
-          aria-controls="flip-card-hero"
-          >
-            flip
-          </button>
-            <div
-            id="flip-card-hero"
-            name="flip-card-hero"
-            class="hero-about relative w-full"
-            aria-live="polite"
-            aria-label={isFlipped ? "Developer ID card view" : "About me text view"}
-            >
-          
-              <!-- ID Card Overlay -->
-              {#if isFlipped}
-                <div class="prose rounded-[40px] w-full">
-                  <div
-                    class=" inset-0 flex items-center justify-center w-full "
-                    in:fade={{ duration: 300 }}
-                    out:fade={{ duration: 200 }}
-                  >
-                    <div class="w-full  overflow-y-auto p-4">
-                      <div
-                        class="id-card flex flex-col gap-2 px-4 sm:px-6 max-w-md mx-auto bg-gradient-to-br from-blue-500/10 to-purple-600/10 rounded-2xl border-t-4 border-gradient-to-r from-blue-500 via-purple-600 to-cyan-500 relative"
-                        role="img"
-                        aria-label="Developer ID card for Rifky Adni Putra"
-                      >
-                        <div
-                          class="flex items-center justify-center gap-2 py-4 sm:py-6  mb-4"
-                        >
-                          <div class="text-2xl">🌊</div>
-                          <div
-                            class="text-base sm:text-lg font-semibold text-white uppercase tracking-wide"
-                          >
-                            Developer ID
-                          </div>
-                        </div>
-                        <div
-                          class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start flex-1"
-                        >
-                          <div class="flex-shrink-0 self-center sm:self-start">
-                            <div
-                              class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-lg sm:text-xl font-bold text-white shadow-lg shadow-blue-500/30"
-                            >
-                              RP
-                            </div>
-                          </div>
-                          <div class="flex-1 flex flex-col gap-3 text-left w-full">
-                            <div
-                              class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-1 border-b border-white/10 gap-1"
-                            >
-                              <span
-                                class="text-xs text-white/70 font-medium uppercase tracking-wider"
-                                >Name:</span
-                              >
-                              <span
-                                class="text-sm sm:text-base text-white font-semibold"
-                                >Rifky Adni Putra</span
-                              >
-                            </div>
-                            <div
-                              class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-1 border-b border-white/10 gap-1"
-                            >
-                              <span
-                                class="text-xs text-white/70 font-medium uppercase tracking-wider"
-                                >Role:</span
-                              >
-                              <span
-                                class="text-sm sm:text-base text-white font-semibold"
-                                >Full-Stack Developer</span
-                              >
-                            </div>
-                            <div
-                              class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-1 border-b border-white/10 gap-1"
-                            >
-                              <span
-                                class="text-xs text-white/70 font-medium uppercase tracking-wider"
-                                >Level:</span
-                              >
-                              <span
-                                class="text-sm sm:text-base text-white font-semibold"
-                                >Senior</span
-                              >
-                            </div>
-                            <div
-                              class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-1 border-b border-white/10 gap-1"
-                            >
-                              <span
-                                class="text-xs text-white/70 font-medium uppercase tracking-wider"
-                                >Specialties:</span
-                              >
-                              <span
-                                class="text-sm sm:text-base text-white font-semibold"
-                                >Web Dev, UI/UX</span
-                              >
-                            </div>
-                            <div
-                              class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-1 gap-1"
-                            >
-                              <span
-                                class="text-xs text-white/70 font-medium uppercase tracking-wider"
-                                >Status:</span
-                              >
-                              <span
-                                class="text-sm sm:text-base text-green-400 font-semibold flex items-center gap-1"
-                              >
-                                <span
-                                  class="w-2 h-2 bg-green-400 rounded-full animate-pulse"
-                                ></span>
-                                Active
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="mt-auto pt-4 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center gap-2 text-center"
-                        >
-                          <div
-                            class="font-mono text-xs text-white/60 bg-white/10 px-2 py-1 rounded"
-                          >
-                            ID: DEV-2024-RP
-                          </div>
-                          <div class="text-xs text-white/60">Valid until 2030</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {:else}
-                <div class="about-content min-h-[30vh] prose p-6 sm:p-8 lg:p-12 rounded-[40px]">
-                <h3
-                  id="about-section-title"
-                  class="font-serif text-white text-lg sm:text-xl lg:text-2xl mb-4"
-                >
-                  About Me
-                </h3>
-                <p
-                  class="font-serif text-white text-sm sm:text-base lg:text-lg leading-relaxed mb-4"
-                >
-                  Passionate full-stack developer with expertise in modern web
-                  technologies. I love creating beautiful, functional, and
-                  user-friendly applications that solve real-world problems.
-                  Always eager to learn new technologies and contribute to
-                  innovative projects.
-                </p>
-                <p
-                  class="font-serif text-white text-sm sm:text-base lg:text-lg leading-relaxed"
-                >
-                  When offline you'll find me exploring seas, freediving for
-                  relaxation, and capturing moments through photography.
-                </p>
-              </div>
-              {/if}
+            <div class="about-content min-h-[30vh] prose p-6 sm:p-8 lg:p-12 rounded-[40px]">
+              <h3
+                id="about-section-title"
+                class="font-serif text-white text-lg sm:text-xl lg:text-2xl mb-4"
+              >
+                About Me
+              </h3>
+              <p
+                class="font-serif text-white text-sm sm:text-base lg:text-lg leading-relaxed mb-4"
+              >
+                Passionate full-stack developer with expertise in modern web
+                technologies. I love creating beautiful, functional, and
+                user-friendly applications that solve real-world problems.
+                Always eager to learn new technologies and contribute to
+                innovative projects.
+              </p>
+              <p
+                class="font-serif text-white text-sm sm:text-base lg:text-lg leading-relaxed"
+              >
+                When offline you'll find me exploring seas, freediving for
+                relaxation, and capturing moments through photography.
+              </p>
             </div>
           </LiquidGlass>
         </div>
@@ -282,7 +174,7 @@
       <!-- Tech Stack Card -->
       <div
         class="glass-card bg-[rgba(215,212,212,0.01)] border border-white/25 backdrop-blur-xl rounded-2xl sm:rounded-3xl lg:rounded-[40px] p-4 sm:p-6 lg:p-8 shadow-lg shadow-black/10 transition-all duration-300 relative"
-        in:fade={{ duration: 800, delay: 600 }}
+        in:fade={{ duration: 800, delay: 100 }}
       >
         <div class="flex justify-between items-center mb-4 sm:mb-6">
           <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white m-0">
@@ -346,7 +238,7 @@
     </section>
 
     <!-- Q&A Section -->
-    <section class="max-w-4xl w-full px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12 lg:mb-16">
+    <section class="qa-section max-w-4xl w-full px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12 lg:mb-16">
       <QASection />
     </section>
     </main>

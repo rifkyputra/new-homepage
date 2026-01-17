@@ -1,0 +1,19 @@
+name = "rifky-backend"
+main = "dist/worker.js"
+compatibility_date = "2025-10-11"
+compatibility_flags = []
+account_id = "" # set your Cloudflare account id
+workers_dev = true
+
+[build]
+command = "bun run build"
+upload_format = "modules"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "rifky-contacts"
+database_id = "" # Run: wrangler d1 create rifky-contacts
+
+[vars]
+# add runtime secrets/vars here if needed
+# RESEND_API_KEY will be set via: wrangler secret put RESEND_API_KEY
