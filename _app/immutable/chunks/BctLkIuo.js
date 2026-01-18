@@ -1,4 +1,4 @@
-import{y as u,z as m,A as _,B as h,h as b,e as c,C as y,g as S,i as $,j as k,k as E,l as x,m as I,n as N}from"./DvzcCYjK.js";import"./DsnmJJEf.js";import{s as V,r as g}from"./1IRZhT9e.js";import{I as j}from"./Co_LlTdH.js";function M(e,a,n=a){var o=new WeakSet;u(e,"input",async l=>{var r=l?e.defaultValue:e.value;if(r=f(e)?d(r):r,n(r),c!==null&&o.add(c),await m(),r!==(r=a())){var t=e.selectionStart,s=e.selectionEnd,i=e.value.length;if(e.value=r??"",s!==null){var v=e.value.length;t===s&&s===i&&v>i?(e.selectionStart=v,e.selectionEnd=v):(e.selectionStart=t,e.selectionEnd=Math.min(s,v))}}}),(b&&e.defaultValue!==e.value||_(a)==null&&e.value)&&(n(f(e)?d(e.value):e.value),c!==null&&o.add(c)),h(()=>{var l=a();if(e===document.activeElement){var r=y??c;if(o.has(r))return}f(e)&&l===d(e.value)||e.type==="date"&&!l&&!e.value||l!==e.value&&(e.value=l??"")})}function f(e){var a=e.type;return a==="number"||a==="range"}function d(e){return e===""?null:+e}function P(e,a){S(a,!0);/**
+import"./DsnmJJEf.js";import{g as p,i,j as m,k as l,l as c,m as d,n as h}from"./DvzcCYjK.js";import{s as f,r as u}from"./1IRZhT9e.js";import{I as $}from"./BvULHLzh.js";function I(o,s){p(s,!0);/**
  * @license @lucide/svelte v0.545.0 - ISC
  *
  * ISC License
@@ -41,4 +41,4 @@ import{y as u,z as m,A as _,B as h,h as b,e as c,C as y,g as S,i as $,j as k,k a
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- */let n=g(a,["$$slots","$$events","$$legacy"]);const o=[["path",{d:"m21 21-4.34-4.34"}],["circle",{cx:"11",cy:"11",r:"8"}]];j(e,V({name:"search"},()=>n,{get iconNode(){return o},children:(l,r)=>{var t=$(),s=k(t);E(s,()=>a.children??N),x(l,t)},$$slots:{default:!0}})),I()}export{P as S,M as b};
+ */let r=u(s,["$$slots","$$events","$$legacy"]);const e=[["path",{d:"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"}],["rect",{x:"2",y:"4",width:"20",height:"16",rx:"2"}]];$(o,f({name:"mail"},()=>r,{get iconNode(){return e},children:(a,g)=>{var t=i(),n=m(t);l(n,()=>s.children??h),c(a,t)},$$slots:{default:!0}})),d()}export{I as M};
