@@ -1,8 +1,19 @@
 <script lang="ts">
   import "../app.css";
   import favicon from "$lib/assets/favicon.svg";
+  import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+  import { Toaster } from 'svelte-sonner';
 
   let { children } = $props();
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 1,
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
 </script>
 
 <svelte:head>
@@ -14,7 +25,11 @@
   />
 </svelte:head>
 
-{@render children?.()}
+<Toaster richColors position="top-right" />
+
+<QueryClientProvider client={queryClient}>
+  {@render children?.()}
+</QueryClientProvider>
 
 <!-- SVG Filters for Liquid Glass Effect -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:worker": "wrangler dev --local --persist --watch",
+    "dev:worker": "wrangler dev",
     "build": "tsc -p tsconfig.json",
     "build:worker": "tsc -p tsconfig.json && node dist/worker.js",
-    "deploy:worker": "wrangler publish"
+    "deploy:worker": "wrangler deploy"
   },
   "dependencies": {
     "hono": "^4.0.0",

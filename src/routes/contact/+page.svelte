@@ -1,28 +1,25 @@
 <script lang="ts">
   import { Mail } from "@lucide/svelte";
   import { Nav, Footer, GradientBackground } from "$lib/components";
+  import { createMutation } from '@tanstack/svelte-query';
+  import { toast } from 'svelte-sonner';
+  import { dev, } from '$app/environment';
 
-  const BACKEND_URL = 'https://backend.ky.pir.my.id'; // Update with your backend URL
+  const BACKEND_URL = dev 
+    ? 'http://localhost:8787' 
+    : 'https://rifky-backend.rifqempul.workers.dev';
 
-  let submitting = false;
   let success = false;
-  let error: string | null = null;
+  let formElement: HTMLFormElement | null = null;
 
-  async function handleSubmit(event: Event) {
-    event.preventDefault();
-    submitting = true;
-    error = null;
+  interface ContactData {
+    name: string;
+    email: string;
+    message: string;
+  }
 
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-    
-    const data = {
-      name: formData.get('name')?.toString().trim() || '',
-      email: formData.get('email')?.toString().trim() || '',
-      message: formData.get('message')?.toString().trim() || '',
-    };
-
-    try {
+  const contactMutation = createMutation(() => ({
+    mutationFn: async (data: ContactData) => {
       const response = await fetch(`${BACKEND_URL}/contact`, {
         method: 'POST',
         headers: {
@@ -33,18 +30,40 @@
 
       const result = await response.json();
 
-      if (response.ok && result.success) {
-        success = true;
-        form.reset();
-      } else {
-        error = result.error || 'Something went wrong. Please try again.';
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Something went wrong. Please try again.');
       }
-    } catch (err) {
-      console.error('Contact form error:', err);
-      error = 'Failed to send message. Please try again.';
-    } finally {
-      submitting = false;
-    }
+
+      return result;
+    },
+    onSuccess: () => {
+      success = true;
+      formElement?.reset();
+      toast.success('Message sent successfully!', {
+        description: "I'll get back to you as soon as possible.",
+      });
+    },
+    onError: (error: Error) => {
+      toast.error('Failed to send message', {
+        description: error.message || 'Something went wrong. Please try again.',
+      });
+    },
+  }));
+
+  async function handleSubmit(event: Event) {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    formElement = form;
+    const formData = new FormData(form);
+    
+    const data: ContactData = {
+      name: formData.get('name')?.toString().trim() || '',
+      email: formData.get('email')?.toString().trim() || '',
+      message: formData.get('message')?.toString().trim() || '',
+    };
+
+    contactMutation.mutate(data);
   }
 </script>
 
@@ -87,14 +106,14 @@
             <textarea name="message" rows="6" required class="w-full rounded-lg bg-transparent border border-white/20 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
           </div>
 
-          {#if error}
-            <p class="text-sm text-red-400">{error}</p>
+          {#if contactMutation.isError}
+            <p class="text-sm text-red-400">{contactMutation.error?.message || 'An error occurred'}</p>
           {/if}
 
           <div class="flex items-center justify-between gap-4">
-            <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg transition-colors font-semibold" disabled={submitting}>
+            <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed" disabled={contactMutation.isPending}>
               <Mail class="w-4 h-4" />
-              {#if submitting}Sending...{:else}Send message{/if}
+              {#if contactMutation.isPending}Sending...{:else}Send message{/if}
             </button>
 
             <a href="mailto:rifkyadp@gmail.com" class="text-sm text-gray-300 hover:text-white">Or email me directly</a>

@@ -41,9 +41,8 @@ function checkRateLimit(ip: string): { allowed: boolean; remaining: number } {
 
 // CORS middleware - allow requests from your frontend domain
 app.use('/*', cors({
-  origin: ['https://ky.pir.my.id', 'http://localhost:5173'], // Add your domains
-  allowMethods: ['GET', 'POST', 'OPTIONS'],
-  allowHeaders: ['Content-Type'],
+  origin: ['https://pir.my.id','http://localhost:5173', 'http://localhost:5174', ], // Add your domains
+  allowMethods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH'],
   maxAge: 86400,
 }))
 
@@ -74,7 +73,7 @@ app.post('/contact', async (c) => {
     const resend = new Resend(c.env.RESEND_API_KEY)
     
     const { data, error } = await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>', // Update with your verified domain
+      from: 'Contact Form <noreply@pir.my.id>', // Update with your verified domain
       to: ['rifkyadp@gmail.com'], // Your email
       reply_to: email,
       subject: `Contact form: ${name}`,
