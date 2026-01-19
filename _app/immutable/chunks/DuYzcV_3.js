@@ -1,4 +1,4 @@
-import"./DsnmJJEf.js";import{g as n,i,j as c,k as m,n as d,l,m as h}from"./DvzcCYjK.js";import{s as u,r as f}from"./1IRZhT9e.js";import{I as $}from"./BvULHLzh.js";function I(o,s){n(s,!0);/**
+import"./DsnmJJEf.js";import{i as n,j as i,k as c,l as m,o as d,m as l,n as h}from"./7jZ7zA9w.js";import{s as u,r as f}from"./DhpeYoMj.js";import{I as $}from"./QhXGDYdU.js";function I(t,o){n(o,!0);/**
  * @license @lucide/svelte v0.545.0 - ISC
  *
  * ISC License
@@ -41,4 +41,4 @@ import"./DsnmJJEf.js";import{g as n,i,j as c,k as m,n as d,l,m as h}from"./DvzcC
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- */let r=f(s,["$$slots","$$events","$$legacy"]);const a=[["path",{d:"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"}],["path",{d:"M9 18c-4.51 2-5-2-7-2"}]];$(o,u({name:"github"},()=>r,{get iconNode(){return a},children:(e,g)=>{var t=i(),p=c(t);m(p,()=>s.children??d),l(e,t)},$$slots:{default:!0}})),h()}export{I as G};
+ */let r=f(o,["$$slots","$$events","$$legacy"]);const a=[["path",{d:"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"}],["path",{d:"M9 18c-4.51 2-5-2-7-2"}]];$(t,u({name:"github"},()=>r,{get iconNode(){return a},children:(e,v)=>{var s=i(),p=c(s);m(p,()=>o.children??d),l(e,s)},$$slots:{default:!0}})),h()}export{I as G};
