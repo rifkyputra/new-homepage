@@ -1,4 +1,4 @@
-import"./DsnmJJEf.js";import{i as p,j as i,k as m,l,m as c,n as d,o as h}from"./7jZ7zA9w.js";import{s as f,r as u}from"./DhpeYoMj.js";import{I as $}from"./QhXGDYdU.js";function I(t,o){p(o,!0);/**
+import"./DsnmJJEf.js";import{o as n,t as i,a as m,v as c,b as d,w as l,x as h}from"./B3q_-_dE.js";import{s as f,r as u}from"./EJWUz-6v.js";import{I as $}from"./BBhmi-7A.js";function y(s,t){n(t,!0);/**
  * @license @lucide/svelte v0.545.0 - ISC
  *
  * ISC License
@@ -41,4 +41,4 @@ import"./DsnmJJEf.js";import{i as p,j as i,k as m,l,m as c,n as d,o as h}from"./
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- */let r=u(o,["$$slots","$$events","$$legacy"]);const e=[["path",{d:"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"}],["rect",{x:"2",y:"4",width:"20",height:"16",rx:"2"}]];$(t,f({name:"mail"},()=>r,{get iconNode(){return e},children:(a,g)=>{var s=i(),n=m(s);l(n,()=>o.children??h),c(a,s)},$$slots:{default:!0}})),d()}export{I as M};
+ */let r=u(t,["$$slots","$$events","$$legacy"]);const a=[["path",{d:"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"}],["rect",{x:"2",y:"4",width:"20",height:"16",rx:"2"}]];$(s,f({name:"mail"},()=>r,{get iconNode(){return a},children:(e,g)=>{var o=i(),p=m(o);c(p,()=>t.children??h),d(e,o)},$$slots:{default:!0}})),l()}export{y as M};
