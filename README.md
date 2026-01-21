@@ -47,3 +47,41 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+## Resume PDF Generation
+
+This project includes automatic LaTeX-to-PDF conversion for the resume. The PDF is generated at build time from `static/resume.tex`.
+
+### Prerequisites
+
+Install LaTeX on your system:
+
+**macOS:**
+```sh
+brew install basictex
+```
+
+**Install required LaTeX packages:**
+```sh
+sudo /Library/TeX/texbin/tlmgr update --self
+sudo /Library/TeX/texbin/tlmgr install preprint collection-fontsrecommended marvosym fancyhdr babel enumitem titlesec hyperref geometry
+```
+
+**Ubuntu/Debian:**
+```sh
+sudo apt-get install texlive-latex-base texlive-latex-extra
+```
+
+### Generate PDF
+
+Manually generate the PDF:
+```sh
+bun generate:pdf
+```
+
+The PDF is automatically generated during deployment:
+```sh
+bun build:deploy  # Generates PDF, builds site, and deploys
+```
+
+The generated PDF will be available at `/Rifky_Putra_Resume.pdf`.
