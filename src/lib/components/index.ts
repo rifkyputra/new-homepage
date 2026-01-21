@@ -17,3 +17,4 @@ export { default as Chip } from "./Chip.svelte";
 export { default as Text } from "./Text.svelte";
 export { default as Alert } from "./Alert.svelte";
 export { default as Card } from "./Card.svelte";
+export { default as ContactForm } from "./ContactForm.svelte";

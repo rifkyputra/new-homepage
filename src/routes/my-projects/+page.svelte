@@ -2,133 +2,7 @@
   import { Github, ExternalLink, Calendar, Search, Filter, SortAsc, X, RefreshCw } from "@lucide/svelte";
   import { fade } from "svelte/transition";
   import { Nav, Footer, GradientBackground } from "$lib/components";
-
-  const projects = [
-    {
-      title: "Medical AI Assistant",
-      description:
-        "Built a medical triage assistant with FastAPI + LangGraph routing, MCP tools for interoperability, and a streaming React chat UI; delivers cholesterol/diabetes risk assessments, first-aid guidance, and WebSocket live responses backed by OpenRouter LLM.",
-      technologies: ["FastAPI", "LangGraph", "MCP", "React", "WebSocket", "OpenRouter"],
-      status: "personal",
-      date: "2025",
-    },
-    {
-      title: "Galeriee",
-      description:
-        "Full-stack collaborative gallery app with role-based authentication, ffmpeg compression, email invitations, and a serverless architecture.",
-      technologies: ["TanStack Start", "ffmpeg", "Cloudflare R2", "Turso"],
-      demo: "https://galeri.ee",
-      status: "personal",
-      date: "2025",
-    },
-    {
-      title: "Rifky Landing Page",
-      description:
-        "A personal portfolio website built with SvelteKit, featuring multilingual greetings and modern UI design.",
-      technologies: ["SvelteKit", "TypeScript", "Tailwind CSS", "Vite"],
-      github: "https://github.com/rifkyputra/rifky-landing",
-      demo: "#",
-      status: "personal",
-      date: "2025",
-    },
-    {
-      title: "Chill6",
-      description:
-        "Entertainment web platform with PWA support, Tauri desktop app targets, TanStack Router routing, and modern TypeScript/Tailwind UI.",
-      technologies: ["TypeScript", "TanStack Router", "Tailwind CSS", "Tauri", "PWA"],
-      github: "https://github.com/rifkyputra/chill6Homepage",
-      demo: "https://chill6.space/",
-      status: "personal",
-      date: "2025",
-    },
-    {
-      title: "Soundboard",
-      description:
-        "Progressive Web App soundboard with hotkeys, offline support, Recoil state management, and automated tests (Playwright & Vitest).",
-      technologies: ["React", "TypeScript", "Vite", "Recoil", "PWA"],
-      github: "https://github.com/rifkyputra/soundboard-pwa",
-      demo: "#",
-      status: "community",
-      date: "2023",
-    },
-    {
-      title: "Dockyy",
-      description:
-        "A modern Docker dashboard with Git integration, Docker Compose management, Cloudflare Tunnel support, and real-time container status.",
-      technologies: ["Docker", "React", "TypeScript", "Flask", "SQLAlchemy", "Turso", "Cloudflare Tunnel"],
-      github: "https://github.com/rifkyputra/dockyy",
-      demo: "#",
-      status: "personal",
-      date: "2024",
-    },
-    {
-      title: "Honotan",
-      description:
-        "Monorepo starter combining Hono (API) and TanStack Start (web), built with Bun for fast iterations—useful as a boilerplate for modern fullstack apps.",
-      technologies: ["Bun", "Hono", "TanStack Start", "Drizzle ORM", "Redis", "BullMQ", "Postgres"],
-      github: "https://github.com/rifkyputra/honotan",
-      demo: "#",
-      status: "personal",
-      date: "2024",
-    },
-    {
-      title: "iSAFE BIB",
-      description:
-        "Health, safety, and environment app with offline mode support for 500+ daily active users in remote mining areas. Spearheaded major upgrade and rewrite from React Native to Flutter. Major upgrade from Flutter 1 to Flutter 2, huge codebase up to 100k lines of code.",
-      technologies: ["Flutter", "Offline Sync", "SQLite"],
-      status: "proprietary",
-      date: "2020-2023",
-    },
-    {
-      title: "Jakarta Eye Center Apps",
-      description:
-        "Led Discovery Phases for new feature sets, implementing robust API integrations and asynchronous payment processing. Increased user retention and customer satisfaction.",
-      technologies: ["Flutter", "API Integration", "Payment Gateway"],
-      status: "proprietary",
-      date: "2021-2023",
-    },
-    {
-      title: "SunTerra",
-      description:
-        "Solar Panel Installation app supporting both Client and Vendor Apps for managing solar panel installations.",
-      technologies: ["Flutter"],
-      status: "proprietary",
-      date: "2020-2023",
-    },
-    {
-      title: "Chat App",
-      description: "Chat App using grpc protocol with real-time messaging",
-      technologies: ["gRPC", "Flutter", "Bloc"],
-      github: "#",
-      demo: "#",
-      status: "personal",
-      date: "2022",
-    },
-    {
-      title: "Hospital App",
-      description: "Hospital management app. freelance project from client",
-      technologies: ["Flutter", "Bloc"],
-      status: "proprietary",
-      date: "2022",
-    },
-    {
-      title: "Survey Website",
-      description:
-        "Survey website for gathering employee feedback. Working as fulltime",
-      technologies: ["React", "TypeScript"],
-      status: "proprietary",
-      date: "2022",
-    },
-    {
-      title: "sshii",
-      description:
-        "A bash script to manage multiple SSH keys in the same host, simplifying SSH key configuration and switching.",
-      technologies: ["Bash", "SSH"],
-      github: "https://github.com/rifkyputra/sshii",
-      status: "community",
-      date: "2020",
-    },
-  ];
+  import { projects } from "$lib/data/projects";
 
   // Reactive variables for search, filter, sort
   let searchTerm = $state('');
@@ -196,7 +70,7 @@
   }
 </script>
 
-<GradientBackground class="variant-purple">
+<GradientBackground>
   <!-- Navigation -->
   <div class="flex justify-center pt-8">
     <Nav />

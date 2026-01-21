@@ -67,7 +67,7 @@
   ];
 </script>
 
-<GradientBackground class="variant-purple">
+<GradientBackground>
   <!-- Navigation -->
   <div class="flex justify-center pt-8">
     <Nav />

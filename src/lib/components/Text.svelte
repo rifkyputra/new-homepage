@@ -7,7 +7,6 @@
     align?: 'left' | 'center' | 'right' | 'justify';
     gradient?: boolean;
     class?: string;
-    [key: string]: any;
   }
 
   let {
@@ -18,7 +17,7 @@
     align = 'left',
     gradient = false,
     class: className = '',
-    ...restProps
+    children
   }: Props = $props();
 
   // Color classes
@@ -103,9 +102,8 @@
 <svelte:element
   this={variant}
   class={classes}
-  {...restProps}
 >
-  <slot />
+  {@render children?.()}
 </svelte:element>
 
 <style>

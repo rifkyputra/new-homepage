@@ -26,6 +26,7 @@
     onmouseenter,
     onmouseleave,
     onremove,
+    children,
     ...restProps
   }: Props = $props();
 
@@ -68,7 +69,7 @@
   onmouseenter={onmouseenter}
   onmouseleave={onmouseleave}
 >
-  <slot />
+  {@render children?.()}
   {#if removable}
     <button
       type="button"

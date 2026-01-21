@@ -14,6 +14,7 @@
     dismissible = false,
     icon = true,
     class: className = '',
+    children,
     ...restProps
   }: Props = $props();
 
@@ -66,14 +67,14 @@
   {/if}
   
   <div class="flex-1 min-w-0">
-    <slot />
+    {@render children?.()}
   </div>
 
   {#if dismissible}
     <button
       type="button"
       class="flex-shrink-0 inline-flex items-center justify-center w-5 h-5 text-current rounded-full hover:bg-white/20 transition-colors duration-150 mt-0.5"
-      on:click={dismiss}
+      onclick={dismiss}
       aria-label="Dismiss"
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

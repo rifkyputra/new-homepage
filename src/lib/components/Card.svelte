@@ -16,6 +16,7 @@
     shadow = true,
     rounded = 'xl',
     class: className = '',
+    children,
     ...restProps
   }: Props = $props();
 
@@ -58,7 +59,7 @@
 </script>
 
 <div class={classes} {...restProps}>
-  <slot />
+  {@render children?.()}
 </div>
 
 <style>
