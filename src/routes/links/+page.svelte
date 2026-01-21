@@ -60,7 +60,6 @@
     {
       name: "Resume/CV",
       description: "Download my latest resume",
-      url: "#",
       icon: Download,
       type: "PDF",
     },
@@ -130,10 +129,9 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
           {#each resources as resource, index}
             <a
-              href={resource.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="resource-card group bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-purple-400/50 transition-all duration-300 hover:transform hover:scale-105"
+              href="/Rifky_Putra_Resume.pdf"
+              download="Rifky_Putra_Resume.pdf"
+              class="resource-card group bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-purple-400/50 transition-all duration-300 hover:transform hover:scale-105 text-left w-full block"
               in:fade={{ duration: 600, delay: index * 200 }}
             >
               <div class="flex items-center gap-4">
