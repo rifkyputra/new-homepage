@@ -3,7 +3,7 @@
   import { fade } from "svelte/transition";
   import { formatDate } from "$lib/blog";
   import type { PageData } from "./$types";
-  import { Nav } from "$lib/components";
+  import { Nav, GradientBackground } from "$lib/components";
 
   interface Props {
     data: PageData;
@@ -25,9 +25,7 @@
   <meta name="twitter:description" content={post.metadata.excerpt} />
 </svelte:head>
 
-<div
-  class="min-h-screen bg-gradient-to-br from-slate-800 to-slate-700 text-white"
->
+<GradientBackground class="min-h-screen text-white">
   <!-- Navigation -->
   <div class="flex justify-center pt-8">
     <Nav />
@@ -138,7 +136,7 @@
       </footer>
     </article>
   </main>
-</div>
+</GradientBackground>
 
 <style>
 </style>

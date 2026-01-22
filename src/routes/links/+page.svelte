@@ -40,20 +40,6 @@
       icon: Twitter,
       color: "from-sky-400 to-sky-600",
     },
-    {
-      name: "Instagram",
-      description: "See my life behind the code",
-      url: "https://instagram.com/0xrkyy",
-      icon: Instagram,
-      color: "from-pink-500 to-purple-600",
-    },
-    {
-      name: "Portfolio",
-      description: "Visit my personal website",
-      url: "https://ky.pir.my.id",
-      icon: Globe,
-      color: "from-green-500 to-green-700",
-    },
   ];
 
   const resources = [
@@ -91,7 +77,7 @@
       <h2 class="text-2xl font-bold mb-8 text-center">
         Social Media & Professional
       </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {#each socialLinks as link, index}
           <a
             href={link.url}
@@ -126,7 +112,7 @@
     <section class="mb-16">
       <h2 class="text-2xl font-bold mb-8 text-center">Resources</h2>
       <div class="flex justify-center">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-2xl">
           {#each resources as resource, index}
             <a
               href="/Rifky_Putra_Resume.pdf"

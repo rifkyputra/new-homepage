@@ -77,14 +77,14 @@
   </div>
 
   <!-- Main Content -->
-  <main class="container mx-auto px-6 py-12 text-white">
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-12 text-white">
     <div class="text-center mb-16" in:fade={{ duration: 800 }}>
       <h1
-        class="text-5xl font-bold mb-4 bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent"
+        class="text-5xl font-extrabold mb-4 font-['Raleway']"
       >
         Portfolio
       </h1>
-      <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+      <p class="text-[#9c9c9c] text-base max-w-2xl mx-auto font-['IBM_Plex_Mono']">
         Here's a collection of projects I've worked on, showcasing my skills in
         web development, design, and problem-solving.
       </p>
@@ -102,7 +102,7 @@
             type="text"
             bind:value={searchTerm}
             placeholder="Search projects..."
-            class="w-full pl-10 pr-10 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20"
+            class="w-full pl-10 pr-10 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#3f8e00] focus:ring-2 focus:ring-[#3f8e00]/20"
           />
 
           {#if searchTerm}
@@ -122,12 +122,12 @@
        <!-- Status Filter -->
         <div class="flex items-center gap-3">
           <Filter class="w-5 h-5 text-gray-400" />
-          <span class="text-gray-300 text-sm font-medium">Status:</span>
+          <span class="text-gray-300 text-sm font-medium font-['IBM_Plex_Mono']">Status:</span>
           <div class="flex items-center gap-2">
             {#each ['personal', 'community', 'proprietary'] as status}
               <button
                 on:click={() => toggleStatus(status)}
-                class="px-3 py-1 rounded-full text-sm font-medium transition-colors {selectedStatuses.has(status) ? 'bg-purple-600 text-white' : 'bg-white/10 text-gray-300 hover:bg-white/20'}"
+                class="px-3 py-1 rounded-full text-sm font-medium font-['IBM_Plex_Mono'] transition-colors {selectedStatuses.has(status) ? 'bg-[#3f8e00] text-white' : 'bg-white/10 text-gray-300 hover:bg-white/20'}"
                 aria-pressed={selectedStatuses.has(status)}
               >
                 {status}
@@ -139,10 +139,10 @@
         <!-- Sort -->
         <div class="flex items-start gap-3">
           <SortAsc class="w-5 h-5 text-gray-400" />
-          <span class="text-gray-300 text-sm font-medium">Sort:</span>
+          <span class="text-gray-300 text-sm font-medium font-['IBM_Plex_Mono']">Sort:</span>
           <select
             bind:value={sortBy}
-            class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 px-3 py-2 text-sm"
+            class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white focus:outline-none focus:border-[#3f8e00] focus:ring-2 focus:ring-[#3f8e00]/20 px-3 py-2 text-sm font-['IBM_Plex_Mono']"
           >
             <option value="date-desc">Newest First</option>
             <option value="date-asc">Oldest First</option>
@@ -151,7 +151,7 @@
           </select>
 
           <button
-            class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 hover:bg-white/20 rounded-md text-sm text-gray-300"
+            class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 hover:bg-white/20 rounded-md text-sm text-gray-300 font-['IBM_Plex_Mono']"
             on:click={resetFilters}
             aria-label="Reset filters"
           >
@@ -166,7 +166,7 @@
          
       <!-- Results Count -->
       <div class="text-center">
-        <p class="text-gray-400 text-sm">
+        <p class="text-gray-400 text-sm font-['IBM_Plex_Mono']">
           Showing {filteredProjects.length} of {projects.length} projects
         </p>
       </div>
@@ -178,7 +178,7 @@
             {#each uniqueTechs as tech}
               <button
                 on:click={() => toggleTech(tech)}
-                class="px-2 py-1 rounded-full text-xs transition-colors {selectedTechs.has(tech) ? 'bg-purple-500 text-white' : 'bg-white/10 text-gray-300 hover:bg-white/20'}"
+                class="px-2 py-1 rounded-full text-xs font-['IBM_Plex_Mono'] transition-colors {selectedTechs.has(tech) ? 'bg-[#3f8e00] text-white' : 'bg-white/10 text-gray-300 hover:bg-white/20'}"
                 aria-pressed={selectedTechs.has(tech)}
               >
                 {tech}
@@ -191,19 +191,19 @@
     </div>
 
     <!-- Projects Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {#each filteredProjects as project, index}
         <div
-          class="project-card bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-purple-400/50 transition-all duration-300 hover:transform hover:scale-105"
+          class="project-card bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-[#3f8e00]/50 transition-all duration-300 hover:transform hover:scale-105"
           in:fade={{ duration: 600, delay: index * 200 }}
         >
           <div class="flex justify-between items-start mb-4">
             <div class="flex items-center gap-2">
               <Calendar class="w-4 h-4 text-gray-400" />
-              <span class="text-sm text-gray-400">{project.date}</span>
+              <span class="text-sm text-gray-400 font-['IBM_Plex_Mono']">{project.date}</span>
             </div>
             <span
-              class="px-3 py-1 rounded-full text-xs font-semibold {project.status ===
+              class="px-3 py-1 rounded-full text-xs font-semibold font-['IBM_Plex_Mono'] {project.status ===
               'Completed'
                 ? 'bg-green-500/20 text-green-300'
                 : 'bg-yellow-500/20 text-yellow-300'}"
@@ -212,8 +212,8 @@
             </span>
           </div>
 
-          <h3 class="text-xl font-bold mb-3 text-white">{project.title}</h3>
-          <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+          <h3 class="text-xl font-extrabold mb-3 text-white font-['Raleway']">{project.title}</h3>
+          <p class="text-gray-300 mb-4 text-sm leading-relaxed font-['IBM_Plex_Mono']">
             {project.description}
           </p>
 
@@ -221,7 +221,7 @@
           <div class="flex flex-wrap gap-2 mb-6">
             {#each project.technologies as tech}
               <span
-                class="px-2 py-1 bg-purple-500/20 text-purple-200 rounded-full text-xs"
+                class="px-2 py-1 bg-[#3f8e00]/20 text-[#3f8e00] rounded-full text-xs font-['IBM_Plex_Mono']"
               >
                 {tech}
               </span>
@@ -233,7 +233,7 @@
             {#if project.github}
               <a
                 href={project.github}
-                class="flex items-center gap-2 px-4 py-2 bg-gray-700/50 hover:bg-gray-600/50 rounded-lg transition-colors text-sm"
+                class="flex items-center gap-2 px-4 py-2 bg-gray-700/50 hover:bg-gray-600/50 rounded-lg transition-colors text-sm font-['IBM_Plex_Mono']"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -244,7 +244,7 @@
             {#if project.demo}
               <a
                 href={project.demo}
-                class="flex items-center gap-2 px-4 py-2 bg-purple-600/50 hover:bg-purple-500/50 rounded-lg transition-colors text-sm"
+                class="flex items-center gap-2 px-4 py-2 bg-[#3f8e00]/50 hover:bg-[#3f8e00]/70 rounded-lg transition-colors text-sm font-['IBM_Plex_Mono'] text-white shadow-[0px_8px_30px_0px_rgba(63,142,0,0.3)]"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -259,13 +259,13 @@
 
     <!-- Call to Action -->
     <div class="text-center mt-16" in:fade={{ duration: 800, delay: 800 }}>
-      <h2 class="text-2xl font-bold mb-4">Interested in collaborating?</h2>
-      <p class="text-gray-300 mb-6">
+      <h2 class="text-2xl font-extrabold mb-4 font-['Raleway']">Interested in collaborating?</h2>
+      <p class="text-gray-300 mb-6 font-['IBM_Plex_Mono']">
         I'm always open to discussing new projects and opportunities.
       </p>
       <a
         href="/links"
-        class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg transition-colors font-semibold"
+        class="inline-flex items-center gap-2 px-6 py-3 bg-[#3f8e00] hover:bg-[#2d6600] border border-[#62ba1b] rounded text-white font-bold font-['IBM_Plex_Mono'] shadow-[0px_8px_30px_0px_rgba(63,142,0,0.5)] transition-all duration-300"
       >
         <ExternalLink class="w-4 h-4" />
         Get in Touch
@@ -286,7 +286,7 @@
 
   .project-card:hover {
     background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(147, 51, 234, 0.5);
-    box-shadow: 0 20px 40px rgba(147, 51, 234, 0.1);
+    border-color: rgba(63, 142, 0, 0.5);
+    box-shadow: 0 20px 40px rgba(63, 142, 0, 0.1);
   }
 </style>

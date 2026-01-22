@@ -23,12 +23,38 @@
     gsap.from(".hero-content", {
       opacity: 0,
       y: 50,
-      duration: 1,
+      duration: 0.5,
       ease: "power3.out",
-      delay: 0.3
+      delay: 0.2
     });
 
-    // Animate sections on scroll
+    gsap.from(".dev-toolbox-animation", {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+      ease: "power3.out",
+      delay: 0.4
+    });
+
+    gsap.from(".profile-pict-animation", {
+      opacity: 0,
+      y: 50,
+      duration: 1.2,
+      ease: "power3.out",
+      delay: 0.58
+    });
+
+    gsap.to(".profile-pict-animation", {
+      scrollTrigger: {
+        trigger: ".hero-content",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      scale: 0.4,
+      ease: "none"
+    });
+
     const sections = [".case-studies-section", ".services-section", ".recent-work-section", ".contact-section"];
     sections.forEach(selector => {
       gsap.from(selector, {
@@ -63,6 +89,92 @@
         }
       });
     }
+
+    // Staggered animations for case studies
+    gsap.from(".case-study-item", {
+      scrollTrigger: {
+        trigger: ".case-studies-section",
+        start: "top 80%",
+        toggleActions: "play none none reverse"
+      },
+      opacity: 0,
+      y: 60,
+      duration: 1,
+      stagger: 0.3,
+      ease: "power3.out"
+    });
+
+    // Animate case study images with parallax
+    gsap.utils.toArray<HTMLElement>('.case-study-image').forEach((img, index) => {
+      gsap.to(img, {
+        scrollTrigger: {
+          trigger: img,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+        y: index % 2 === 0 ? -50 : 50,
+        ease: "none"
+      });
+    });
+
+ 
+
+    // Animate services cards on hover
+    gsap.utils.toArray<HTMLElement>('.service-card').forEach(card => {
+      const icon = card.querySelector('.service-icon');
+      const title = card.querySelector('.service-title');
+      
+      card.addEventListener('mouseenter', () => {
+        gsap.to(icon, { scale: 1.2, rotation: 360, duration: 0.6, ease: "back.out(1.7)" });
+        gsap.to(title, { x: 10, duration: 0.3, ease: "power2.out" });
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        gsap.to(icon, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(1.7)" });
+        gsap.to(title, { x: 0, duration: 0.3, ease: "power2.out" });
+      });
+    });
+
+    // Animate "Let's get started" button
+    const ctaButton = document.querySelector('.cta-button');
+    if (ctaButton) {
+      gsap.to(ctaButton, {
+        scale: 1.005,
+        duration: 1.5,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+    }
+
+    // Animate tech tags in services
+    gsap.utils.toArray<HTMLElement>('.tech-tag').forEach((tag, index) => {
+      gsap.from(tag, {
+        scrollTrigger: {
+          trigger: tag,
+          start: "top 90%",
+          toggleActions: "play none none reverse"
+        },
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.5,
+        delay: index * 0.1,
+        ease: "back.out(1.7)"
+      });
+    });
+
+    // Parallax background effect for hero
+    gsap.to(".hero-section", {
+      scrollTrigger: {
+        trigger: ".hero-section",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      backgroundPosition: "50% 100%",
+      ease: "none"
+    });
   });
 
   onDestroy(() => {
@@ -125,7 +237,7 @@
   </div>
 
   <!-- Hero Section -->
-  <section class="relative bg-[#080808] min-h-[700px] overflow-hidden">
+  <section class="hero-section relative bg-gradient-to-b from-[#080808] to-[#0a0a0a] min-h-[700px] overflow-hidden">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
       <div class="relative pt-24 pb-20 lg:pt-32 lg:pb-28">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -136,13 +248,13 @@
                 Rifky Adni Putra
               </h1>
               <p class="text-[#9c9c9c] text-sm sm:text-base leading-relaxed max-w-lg font-['IBM_Plex_Mono']">
-                Intro text: Full-stack developer passionate about creating beautiful, functional web applications. Specializing in modern web technologies and always eager to tackle new challenges.
+                Full-stack developer passionate about creating beautiful, functional web applications. Specializing in modern web technologies and always eager to tackle new challenges.
               </p>
             </div>
             
             <a 
               href="#contact"
-              class="inline-flex items-center gap-2 px-12 py-4 bg-[#3f8e00] hover:bg-[#2d6600] border border-[#62ba1b] rounded text-white font-bold font-['IBM_Plex_Mono'] text-base shadow-[0px_8px_30px_0px_rgba(63,142,0,0.5)] transition-all duration-300"
+              class="cta-button inline-flex items-center gap-2 px-12 py-4 bg-[#3f8e00] hover:bg-[#2d6600] border border-[#62ba1b] rounded text-white font-bold font-['IBM_Plex_Mono'] text-base shadow-[0px_8px_30px_0px_rgba(63,142,0,0.5)] transition-all duration-300"
             >
               Let's get started
               <ChevronRight class="w-4 h-4" />
@@ -150,7 +262,7 @@
           </div>
 
           <!-- Right content - Hero image -->
-          <div class="flex justify-center lg:justify-end">
+          <div class="flex justify-center lg:justify-end profile-pict-animation">
             <div class="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] rounded-full overflow-hidden">
               <img src={hero} alt="Profile" class="w-full h-full object-cover" />
             </div>
@@ -158,7 +270,7 @@
         </div>
 
         <!-- Worked with section -->
-        <div class="mt-16 sm:mt-20">
+        <div class="mt-16 sm:mt-20 dev-toolbox-animation">
           <p class="text-white text-sm font-['IBM_Plex_Mono'] mb-6">Dev Toolbox</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
             {#each companyLogos as logo}
@@ -189,8 +301,8 @@
 
       <div class="space-y-20">
         {#each caseStudies as study, index}
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center" class:md:flex-row-reverse={index % 2 === 1}>
-            <div class={`${index % 2 === 1 ? 'md:order-2' : ''}`}>
+          <div class="case-study-item grid grid-cols-1 md:grid-cols-2 gap-8 items-center" class:md:flex-row-reverse={index % 2 === 1}>
+            <div class="case-study-image" class:md:order-2={index % 2 === 1}>
               <div class="aspect-[3/2] rounded-xl overflow-hidden shadow-lg">
                 <img src={study.image} alt={study.title} class="w-full h-full object-cover" />
               </div>
@@ -239,14 +351,14 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         {#each services as service, index}
           <div 
-            class="relative border border-[#484848] rounded-lg p-8 hover:border-[#3f8e00] transition-all duration-300"
+            class="service-card relative border border-[#484848] rounded-lg p-8 hover:border-[#3f8e00] transition-all duration-300"
             in:fade={{ duration: 600, delay: index * 100 }}
           >
             <div class="flex items-center gap-4 mb-4">
-              <div class="p-3 bg-[#3f8e00]/20 rounded-lg">
+              <div class="service-icon p-3 bg-[#3f8e00]/20 rounded-lg">
                 <svelte:component this={service.icon} class="w-6 h-6 text-[#3f8e00]" />
               </div>
-              <h3 class="text-xl font-bold font-['Raleway'] text-white">{service.title}</h3>
+              <h3 class="service-title text-xl font-bold font-['Raleway'] text-white">{service.title}</h3>
             </div>
             
             <p class="text-[#9c9c9c] text-sm font-['IBM_Plex_Mono'] leading-relaxed mb-4">
@@ -255,7 +367,7 @@
 
             <div class="flex flex-wrap gap-2">
               {#each service.technologies.slice(0, 4) as tech}
-                <span class="px-2 py-1 bg-white/10 rounded text-xs font-['IBM_Plex_Mono'] text-white/70">
+                <span class="tech-tag px-2 py-1 bg-white/10 rounded text-xs font-['IBM_Plex_Mono'] text-white/70">
                   {tech}
                 </span>
               {/each}
