@@ -1,4 +1,4 @@
-import"./DsnmJJEf.js";import{o as n,w as d,t as i,a as c,v as h,b as l,x as m}from"./B3q_-_dE.js";import{s as f,r as u}from"./EJWUz-6v.js";import{I as v}from"./BBhmi-7A.js";function w(r,t){n(t,!0);/**
+import"./DsnmJJEf.js";import{o as n,t as i,a as m,v as c,b as d,w as l,x as h}from"./B4IWmBRq.js";import{s as f,r as u}from"./DY4nccB3.js";import{I as $}from"./C56_P2eU.js";function y(s,t){n(t,!0);/**
  * @license @lucide/svelte v0.545.0 - ISC
  *
  * ISC License
@@ -41,4 +41,4 @@ import"./DsnmJJEf.js";import{o as n,w as d,t as i,a as c,v as h,b as l,x as m}fr
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- */let e=u(t,["$$slots","$$events","$$legacy"]);const o=[["path",{d:"M8 2v4"}],["path",{d:"M16 2v4"}],["rect",{width:"18",height:"18",x:"3",y:"4",rx:"2"}],["path",{d:"M3 10h18"}]];v(r,f({name:"calendar"},()=>e,{get iconNode(){return o},children:(s,$)=>{var a=i(),p=c(a);h(p,()=>t.children??m),l(s,a)},$$slots:{default:!0}})),d()}export{w as C};
+ */let r=u(t,["$$slots","$$events","$$legacy"]);const a=[["path",{d:"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"}],["rect",{x:"2",y:"4",width:"20",height:"16",rx:"2"}]];$(s,f({name:"mail"},()=>r,{get iconNode(){return a},children:(e,g)=>{var o=i(),p=m(o);c(p,()=>t.children??h),d(e,o)},$$slots:{default:!0}})),l()}export{y as M};
