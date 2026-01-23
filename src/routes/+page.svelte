@@ -219,22 +219,24 @@
     { name: "Jira", opacity: 1 },
     { name: "Convex", opacity: 0.5 },
     { name: "OpenCode", opacity: 0.5 },
+    { name: "OpenRouter", opacity: 0.5 },
     { name: "Claude", opacity: 0.5 },
     { name: "GitHub Copilot", opacity: 0.5 },
-    { name: "Notion", opacity: 0.5 },
-    { name: "Chrome DevTools", opacity: 0.5 },
+    { name: "Google Cloud", opacity: 0.5 },
+    { name: "Firebase", opacity: 0.5 },
     { name: "Bun", opacity: 0.5 },
-    { name: "Jupyter Notebook", opacity: 0.5 },
-    { name: "Visual Studio Code", opacity: 0.5 }
+    { name: "Supabase", opacity: 0.5 },
+    { name: "Cloudflare", opacity: 0.5 },
+    { name: "AWS", opacity: 0.5 }
 
   ];
 </script>
 
-<div class="relative bg-white">
+<div class="relative bg-black">
   <!-- Navigation -->
-  <div class="w-full sticky top-0 z-[99]">
-    <Nav />
-  </div>
+   
+      <Nav />
+  
 
   <!-- Hero Section -->
   <section class="hero-section relative bg-gradient-to-b from-[#080808] to-[#0a0a0a] min-h-[700px] overflow-hidden">
@@ -271,7 +273,7 @@
 
         <!-- Worked with section -->
         <div class="mt-16 sm:mt-20 dev-toolbox-animation">
-          <p class="text-white text-sm font-['IBM_Plex_Mono'] mb-6">Dev Toolbox</p>
+          <p class="text-white text-sm font-['IBM_Plex_Mono'] mb-6">Worked with: </p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
             {#each companyLogos as logo}
               <div 
@@ -324,8 +326,11 @@
               <button 
                 class="inline-flex items-center gap-2 px-6 py-2 rounded text-white font-bold font-['IBM_Plex_Mono'] text-sm shadow-lg transition-all duration-300 hover:shadow-xl"
                 style="background: {study.buttonColor}; box-shadow: 0px 8px 30px 0px {study.buttonColor}1a"
+                onclick={() => {
+                  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
               >
-                View case study
+                Request Case Study
                 <ChevronRight class="w-4 h-4" />
               </button>
             </div>

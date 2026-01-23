@@ -49,9 +49,7 @@
 
 <GradientBackground>
   <!-- Navigation -->
-  <div class="flex justify-center pt-8">
     <Nav />
-  </div>
 
   <!-- Main Content -->
   <main class="container mx-auto px-6 py-12 text-white">

@@ -49,7 +49,7 @@
           </li>
           <li>
             <a
-              href="/links"
+              href="/contact"
               class="text-gray-300 hover:text-purple-300 transition-colors text-sm sm:text-base"
               >Contact</a
             >
@@ -70,7 +70,7 @@
           Interested in working together or have a question?
         </p>
         <a
-          href="/links"
+          href="/contact"
           class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-slate-600/50 hover:bg-slate-500/50 rounded-lg transition-colors text-xs sm:text-sm"
         >
           <ExternalLink class="w-3 h-3 sm:w-4 sm:h-4" />

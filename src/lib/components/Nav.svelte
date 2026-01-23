@@ -1,9 +1,13 @@
 <script lang="ts">
   import { Fish, Menu, X, Linkedin, Github } from "@lucide/svelte";
   import { onMount } from "svelte";
+  import { page } from "$app/stores";
 
   let mobileMenuOpen = $state(false);
   let isMobile = $state(false);
+  
+  // Check if we're on the homepage
+  let isHomePage = $derived($page.url.pathname === '/');
 
   function toggleMobileMenu() {
     mobileMenuOpen = !mobileMenuOpen;
@@ -30,8 +34,11 @@
   });
 </script>
 
-<nav
-  class="portfolio-nav sticky top-0 py-4 bg-[#1b1b1b] border-b border-[#2a2a2a]"
+<div class="flex justify-center z-999 sticky top-0 {isHomePage ? 'w-full' : ''}">
+  <nav
+  class=" glass-nav py-4 px-8 border-b transition-all duration-300 {isHomePage 
+    ? 'w-full bg-black border-[#2a2a2a]' 
+    : 'flex justify-centermx-4 md:mx-8 mt-4 rounded-2xl border-white/10'}"
   style="z-index: 99;"
 >
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -41,35 +48,29 @@
         <li>
           <a
             href="/"
-            class="no-underline text-[#9c9c9c] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
+            class="no-underline text-[#8a8a8a] hover:text-white transition-colors duration-300 text-sm text-shadow-xl  font-['IBM_Plex_Mono'] tracking-[0.14px]"
             >Home</a
           >
         </li>
         <li>
           <a
             href="/my-projects"
-            class="no-underline text-[#9c9c9c] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
+            class="no-underline text-[#8a8a8a] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
             >Portfolio</a
           >
         </li>
-        <li>
-          <a
-            href="/links"
-            class="no-underline text-[#9c9c9c] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
-            >Links</a
-          >
-        </li>
+        
         <li>
           <a
             href="/blog"
-            class="no-underline text-[#9c9c9c] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
+            class="no-underline text-[#8a8a8a] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
             >Blog</a
           >
         </li>
         <li>
           <a
             href="/contact"
-            class="no-underline text-[#9c9c9c] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
+            class="no-underline text-[#8a8a8a] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
             >Contact</a
           >
         </li>
@@ -87,28 +88,6 @@
           <Menu class="w-6 h-6" />
         {/if}
       </button>
-
-      <!-- Right side - Social Icons -->
-      <div class="flex items-center gap-4 z-10">
-        <a
-          href="https://linkedin.com/in/rifptra"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-[#9c9c9c] hover:text-white transition-colors duration-300"
-          aria-label="LinkedIn"
-        >
-          <Linkedin class="w-5 h-5" />
-        </a>
-        <a
-          href="https://github.com/rifkyputra"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-[#9c9c9c] hover:text-white transition-colors duration-300"
-          aria-label="GitHub"
-        >
-          <Github class="w-5 h-5" />
-        </a>
-      </div>
     </div>
   </div>
 
@@ -157,7 +136,7 @@
           </li>
           <li>
             <a
-              href="/links"
+              href="/contact"
               onclick={closeMobileMenu}
               class="block p-4 no-underline text-[#9c9c9c] hover:text-white text-center rounded-xl font-['IBM_Plex_Mono'] transition-colors duration-300 hover:bg-white/10"
               >Links</a
@@ -184,9 +163,22 @@
     </button>
   {/if}
 </nav>
+</div>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+
+  /* Glassmorphism styles */
+  .glass-nav {
+    background: rgba(0, 0, 0, 0.09);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0.995;
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  }
 
   /* Animation keyframes */
   @keyframes fadeIn {

@@ -72,10 +72,7 @@
 
 <GradientBackground>
   <!-- Navigation -->
-  <div class="flex justify-center pt-8">
     <Nav />
-  </div>
-
   <!-- Main Content -->
   <main class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-12 text-white">
     <div class="text-center mb-16" in:fade={{ duration: 800 }}>
@@ -90,7 +87,7 @@
       </p>
     </div>
 
-    <div class="mb-12 space-y-6 flex flex-row " in:fade={{ duration: 800, delay: 400 }}>
+    <div class="mb-12 space-y-6 flex flex-col lg:flex-row " in:fade={{ duration: 800, delay: 400 }}>
     <!-- Search, Filter, Sort Controls -->
 
       <div class="flex-col justify-start flex-2 mr-6 space-y-4">
@@ -117,7 +114,26 @@
         </div>
       </div>
 
-      <!-- Filters and Sort -->
+      <div class="flex flex-col lg:flex-row justify-between w-full gap-8">
+
+
+      <!-- Technology Filter -->
+        <div class="flex items-center align-end gap-3">
+          <div class="flex flex-2 gap-2 justify-start flex-wrap w-full">
+            {#each uniqueTechs as tech}
+              <button
+                on:click={() => toggleTech(tech)}
+                class="px-2 py-1 rounded-full text-xs font-['IBM_Plex_Mono'] transition-colors {selectedTechs.has(tech) ? 'bg-[#3f8e00] text-white' : 'bg-white/10 text-gray-300 hover:bg-white/20'}"
+                aria-pressed={selectedTechs.has(tech)}
+              >
+                {tech}
+              </button>
+            {/each}
+          </div>
+        </div>
+
+
+        <!-- Filters and Sort -->
       <div class="flex flex-wrap justify-start gap-6 items-start flex-col">
        <!-- Status Filter -->
         <div class="flex items-center gap-3">
@@ -161,6 +177,8 @@
         </div>
       </div>
 
+      </div>
+
 
       
          
@@ -172,20 +190,7 @@
       </div>
       </div>
       <div>
-          <!-- Technology Filter -->
-        <div class="flex items-center gap-3">
-          <div class="flex gap-2 flex-wrap max-w-md">
-            {#each uniqueTechs as tech}
-              <button
-                on:click={() => toggleTech(tech)}
-                class="px-2 py-1 rounded-full text-xs font-['IBM_Plex_Mono'] transition-colors {selectedTechs.has(tech) ? 'bg-[#3f8e00] text-white' : 'bg-white/10 text-gray-300 hover:bg-white/20'}"
-                aria-pressed={selectedTechs.has(tech)}
-              >
-                {tech}
-              </button>
-            {/each}
-          </div>
-        </div>
+          
 
       </div>
     </div>
@@ -264,7 +269,7 @@
         I'm always open to discussing new projects and opportunities.
       </p>
       <a
-        href="/links"
+        href="/contact"
         class="inline-flex items-center gap-2 px-6 py-3 bg-[#3f8e00] hover:bg-[#2d6600] border border-[#62ba1b] rounded text-white font-bold font-['IBM_Plex_Mono'] shadow-[0px_8px_30px_0px_rgba(63,142,0,0.5)] transition-all duration-300"
       >
         <ExternalLink class="w-4 h-4" />
