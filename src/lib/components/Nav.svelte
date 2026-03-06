@@ -48,14 +48,14 @@
         <li>
           <a
             href="/"
-            class="no-underline text-[#8a8a8a] hover:text-white transition-colors duration-300 text-sm text-shadow-xl  font-['IBM_Plex_Mono'] tracking-[0.14px]"
+            class="no-underline text-[#8a8a8a] hover:text-[#62ba1b] hover:drop-shadow-[0_0_8px_rgba(98,186,27,0.5)] transition-all duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
             >Home</a
           >
         </li>
         <li>
           <a
             href="/my-projects"
-            class="no-underline text-[#8a8a8a] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
+            class="no-underline text-[#8a8a8a] hover:text-[#62ba1b] hover:drop-shadow-[0_0_8px_rgba(98,186,27,0.5)] transition-all duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
             >Portfolio</a
           >
         </li>
@@ -63,14 +63,14 @@
         <li>
           <a
             href="/blog"
-            class="no-underline text-[#8a8a8a] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
+            class="no-underline text-[#8a8a8a] hover:text-[#62ba1b] hover:drop-shadow-[0_0_8px_rgba(98,186,27,0.5)] transition-all duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
             >Blog</a
           >
         </li>
         <li>
           <a
             href="/contact"
-            class="no-underline text-[#8a8a8a] hover:text-white transition-colors duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
+            class="no-underline text-[#8a8a8a] hover:text-[#62ba1b] hover:drop-shadow-[0_0_8px_rgba(98,186,27,0.5)] transition-all duration-300 text-sm font-['IBM_Plex_Mono'] tracking-[0.14px]"
             >Contact</a
           >
         </li>

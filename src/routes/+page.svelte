@@ -289,10 +289,10 @@
     </section>
 
   <!-- Case Studies Section -->
-  <section class="case-studies-section py-20 lg:py-32 bg-white">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+  <section class="case-studies-section py-20 lg:py-32 bg-[#0a0a0a] relative">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
       <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-['Raleway'] text-[#080808] mb-4">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-['Raleway'] text-white mb-4">
           Case Studies
         </h2>
         <p class="text-[#9c9c9c] text-sm sm:text-base max-w-2xl mx-auto font-['IBM_Plex_Mono']">
@@ -304,20 +304,21 @@
       <div class="space-y-20">
         {#each caseStudies as study, index}
           <div class="case-study-item grid grid-cols-1 md:grid-cols-2 gap-8 items-center" class:md:flex-row-reverse={index % 2 === 1}>
-            <div class="case-study-image" class:md:order-2={index % 2 === 1}>
-              <div class="aspect-[3/2] rounded-xl overflow-hidden shadow-lg">
-                <img src={study.image} alt={study.title} class="w-full h-full object-cover" />
+            <div class="case-study-image relative group" class:md:order-2={index % 2 === 1}>
+              <div class="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="aspect-[3/2] rounded-xl overflow-hidden shadow-2xl relative border border-white/5 group-hover:border-white/20 transition-all duration-500 bg-[#111]">
+                <img src={study.image} alt={study.title} class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100" />
               </div>
             </div>
             
             <div class={`space-y-4 ${index % 2 === 1 ? 'md:order-1' : ''}`}>
               <span 
                 class="inline-block px-4 py-1 rounded-full text-xs font-bold font-['IBM_Plex_Mono']"
-                style="color: {study.tagColor}; background: {study.tagBg}"
+                style="color: {study.tagColor}; border: 1px solid {study.tagColor}40"
               >
                 {study.tag}
               </span>
-              <h3 class="text-2xl lg:text-3xl font-extrabold font-['Raleway'] text-[#080808]">
+              <h3 class="text-2xl lg:text-3xl font-extrabold font-['Raleway'] text-white">
                 {study.title}
               </h3>
               <p class="text-[#9c9c9c] text-sm leading-relaxed font-['IBM_Plex_Mono']">
@@ -384,10 +385,10 @@
   </section>
 
   <!-- Recent Work Section -->
-  <section class="recent-work-section py-20 lg:py-32 bg-[#f0f0f0]">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+  <section class="recent-work-section py-20 lg:py-32 bg-[#0a0a0a] relative border-t border-white/5">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
       <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-['Raleway'] text-[#080808] mb-4">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-['Raleway'] text-white mb-4">
           Recent Work
         </h2>
         <p class="text-[#9c9c9c] text-sm sm:text-base max-w-2xl mx-auto font-['IBM_Plex_Mono']">
@@ -398,12 +399,13 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         {#each recentWork as work, index}
-          <div class="space-y-6" in:fade={{ duration: 600, delay: index * 100 }}>
-            <div class="aspect-[3/2] rounded-xl overflow-hidden shadow-lg bg-[#f8f8f8] flex items-center justify-center">
-              <span class="text-[#9c9c9c] font-['IBM_Plex_Mono'] text-sm">Project Preview</span>
+          <div class="group space-y-6 p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300 shadow-xl" in:fade={{ duration: 600, delay: index * 100 }}>
+            <div class="aspect-[3/2] rounded-xl overflow-hidden shadow-2xl bg-[#111] border border-white/5 flex items-center justify-center relative">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              <span class="text-[#9c9c9c] font-['IBM_Plex_Mono'] text-sm group-hover:scale-110 transition-transform duration-500 z-10">Project Preview</span>
             </div>
-            <div class="space-y-3">
-              <h3 class="text-2xl font-extrabold font-['Raleway'] text-[#080808]">
+            <div class="space-y-4">
+              <h3 class="text-2xl font-extrabold font-['Raleway'] text-white group-hover:text-[#62ba1b] transition-colors duration-300">
                 {work.title}
               </h3>
               <p class="text-[#9c9c9c] text-sm font-['IBM_Plex_Mono'] leading-relaxed">
@@ -411,7 +413,7 @@
               </p>
               <div class="flex flex-wrap gap-2">
                 {#each work.technologies.slice(0, 4) as tech}
-                  <span class="px-2 py-1 bg-[#f1f5f9] rounded text-xs font-['IBM_Plex_Mono'] text-[#64748b]">
+                  <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-['IBM_Plex_Mono'] text-[#9c9c9c]">
                     {tech}
                   </span>
                 {/each}

@@ -1,0 +1,75 @@
+---
+title: "Introducing Postlab: The Ultimate Interactive Bare Metal Server Manager"
+excerpt: "Managing bare metal servers often involves juggling between multiple SSH sessions, trying to remember specific package manager commands or tweaking configuration files manually. What if you could have a single, unified interface that runs directly on your machine, giving you complete visibility and control?"
+author: "Rifky Adni Putra"
+date: "2026-03-05"
+readTime: "3 min read"
+tags: ["Rust", "TUI", "Docker", "wasmCloud", "open source"]
+featured: false
+slug: "postlab-intro"
+---
+
+Managing bare metal servers often involves juggling between multiple SSH sessions, trying to remember specific package manager commands or tweaking configuration files manually. What if you could have a single, unified interface that runs directly on your machine, giving you complete visibility and control?
+
+Enter **Postlab**.
+
+## What is Postlab?
+
+[Postlab](https://github.com/rifkyputra/postlab) is an interactive bare metal server manager designed to run directly on the machine it manages. Built in Rust, it’s a lightweight, blazing fast, single-binary application with a low memory footprint. It provides a beautiful Terminal User Interface (TUI) for managing everything ranging from packages and processes to Docker containers and cloud tunnels.
+
+Because it handles core system configurations, package management, and systemd services, Postlab is designed to be run as `root`. And the best part? It's fully cross-platform, supporting both Linux and macOS.
+
+## Key Features
+
+Postlab isn’t just top-level system monitoring; it has deep integrations that allow you to effectively administer your server. It is built with 8 distinct, powerful screens:
+
+### 1. Dashboard
+
+Get an immediate overview of your system's heartbeat. View live hostname, OS details, uptime, CPU cores, memory usage, disk gauges, and performance history at a glance.
+
+### 2. Package Management
+
+No matter if your system uses `apt`, `dnf`, `pacman`, or `brew`, Postlab auto-detects your package manager at startup. You can install, remove, upgrade, or search for packages directly in the TUI, without blocking other operations.
+
+### 3. Security Audits
+
+Keeping a bare metal server secure is tough. Postlab includes a **Security** screen that runs actionable checks (like SSH root login, password auth, Firewall status, and ASLR configuration). It offers a one-click fix for these vulnerabilities, automatically creating a `.bak` copy of your config files before any changes are made. It also manages SSH authorized keys and Fail2Ban.
+
+### 4. Gateway & Tunnel Integrations
+
+- **Gateway:** Manage Caddy installations, set up routes (domain to port), and get automatic TLS effortlessly.
+- **Tunnel:** Control Cloudflare tunnels and ingress configurations directly from your terminal.
+
+### 5. Docker & wasmCloud
+
+Postlab natively supports managing Docker lifecycles—ranging from containers and images to Docker Compose stacks. Additionally, it offers first-class support for **wasmCloud**, allowing you to manage lattices, host nodes, components, and applications right from the TUI.
+
+### 6. Service Ghost Hunter
+
+One unique feature of Postlab is the **Ghosts** management screen, which identifies "ghost" services or abandoned processes that may be silently draining system resources or hogging ports.
+
+## Uncompromised Architecture
+
+Under the hood, Postlab separates its core logic from the Terminal GUI. The `core/` layer—which includes modular traits for PackageManagers, DockerManagers, SshKeyManagers, and more—can be utilized independently. This makes Postlab incredibly robust and paves the way for future extensions such as an HTTP API exposure or a dedicated web interface.
+
+All operations in Postlab are **non-blocking**, meaning you can start a lengthy system update while continuing to investigate your Docker logs on another screen!
+
+## Try It Out
+
+If you manage a Linux or macOS environment and are looking for a streamlined, single-binary TUI solution for administration, give Postlab a try!
+
+To build and run Postlab locally, make sure you have Rust 1.75+ and SQLite installed:
+
+```bash
+# Build and install to /usr/local/bin
+make install
+
+# Launch the interactive TUI
+sudo postlab
+```
+
+Say goodbye to manual package management scripts and scattered server config files. Take control of your bare metal with Postlab today!
+
+---
+
+_Postlab is open source under the Apache-2.0 License._
