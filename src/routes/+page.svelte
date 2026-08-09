@@ -250,7 +250,7 @@
                 Rifky Adni Putra
               </h1>
               <p class="text-[#9c9c9c] text-sm sm:text-base leading-relaxed max-w-lg font-['IBM_Plex_Mono']">
-                Full-stack developer passionate about creating beautiful, functional web applications. Specializing in modern web technologies and always eager to tackle new challenges.
+                Senior full-stack developer working on AI R&D at Micromeet — building an AI Command Centre, agent-based cowork tooling, and the LLM pipelines behind them. Based in Indonesia, working with global teams.
               </p>
             </div>
             
