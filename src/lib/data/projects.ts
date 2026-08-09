@@ -1,5 +1,40 @@
 export const projects = [
   {
+    title: "Gnomix",
+    description:
+      "B2C self-care gamification with agentic AI: chat with AI health specialists across 15 health pillars, habit tracking with streaks, and WhatsApp/Telegram agent transports. Turborepo monorepo with an in-repo design system, deployed over a Cloudflare Tunnel.",
+    technologies: ["TanStack Router", "Hono", "oRPC", "Drizzle", "Postgres", "Better-Auth", "Turborepo"],
+    status: "personal",
+    date: "2026",
+  },
+  {
+    title: "Devlyn",
+    description:
+      "Formula-management platform for recipes, automatic cost calculation, and compliance documentation — serving home kitchens through factories across F&B, cosmetics, pharmaceuticals, and crafts.",
+    technologies: ["TypeScript", "Postgres", "Cloudflare"],
+    demo: "https://withdevlyn.com",
+    status: "personal",
+    date: "2026",
+  },
+  {
+    title: "Indokorpus",
+    description:
+      "An Indonesian-language corpus library of public-domain books and transcripts, with an editorial review queue and a RAG research agent over the corpus. Ships alongside GlasTakar, a pharmacy-domain LLM benchmark whose answer keys are signed off by licensed pharmacists.",
+    technologies: ["TypeScript", "Postgres", "RAG", "LLM Evals"],
+    demo: "https://indokorpus.withdevlyn.com/",
+    status: "personal",
+    date: "2026",
+  },
+  {
+    title: "postlab",
+    description:
+      "Interactive terminal UI for managing bare-metal and homelab servers — services, deploys, and machine state from one keyboard-driven dashboard.",
+    technologies: ["Rust", "TUI"],
+    github: "https://github.com/rifkyputra/postlab",
+    status: "community",
+    date: "2025",
+  },
+  {
     title: "Medical AI Assistant",
     description:
       "Built a medical triage assistant with FastAPI + LangGraph routing, MCP tools for interoperability, and a streaming React chat UI; delivers cholesterol/diabetes risk assessments, first-aid guidance, and WebSocket live responses backed by OpenRouter LLM.",
