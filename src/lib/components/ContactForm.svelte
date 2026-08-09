@@ -74,44 +74,52 @@
   }
 </script>
 
-<div class={className}>
+<div class="{className} w-full">
   {#if success}
-    <div class="bg-[#f8f8f8] backdrop-blur-sm rounded-2xl p-6 border border-[#d8d8d8] text-center">
-      <h2 class="text-2xl font-bold mb-2 text-[#080808]">Thanks — message sent</h2>
-      <p class="text-[#9c9c9c]">I'll reply to you shortly.</p>
+    <div class="glass-card bg-[var(--color-success-900)]/20 backdrop-blur-xl rounded-2xl p-8 lg:p-12 border border-[var(--color-success-500)]/30 text-center shadow-[0_0_30px_rgba(34,197,94,0.1)]">
+      <div class="w-16 h-16 rounded-full bg-[var(--color-success-500)]/20 flex items-center justify-center mx-auto mb-6">
+        <Mail class="w-8 h-8 text-[var(--color-success-400)]" />
+      </div>
+      <h2 class="text-3xl font-bold mb-3 text-white tracking-tight">Message Sent</h2>
+      <p class="text-[var(--text-on-glass-secondary)] text-lg font-light">Thanks for reaching out. I'll get back to you shortly.</p>
     </div>
   {:else}
-    <form onsubmit={handleSubmit} class="space-y-4" bind:this={formElement}>
-      <div>
-        <label for="name" class="block text-xs font-semibold font-['IBM_Plex_Mono'] text-[#080808] mb-2">
-          Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          class="w-full px-4 py-2 bg-[#f8f8f8] border border-[#d8d8d8] rounded text-xs font-['IBM_Plex_Mono'] text-[#080808] placeholder:text-[#757575] focus:outline-none focus:border-[#3f8e00]"
-          placeholder="Your name"
-        />
+    <form onsubmit={handleSubmit} class="space-y-6" bind:this={formElement}>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Name Field -->
+        <div class="space-y-2">
+          <label for="name" class="block text-sm font-semibold text-[var(--text-on-glass-secondary)] tracking-wide">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="w-full px-5 py-4 bg-[var(--glass-bg-dark)] border border-white/10 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-[#62ba1b] focus:ring-1 focus:ring-[#62ba1b]/50 transition-all duration-300"
+            placeholder="Jane Doe"
+          />
+        </div>
+
+        <!-- Email Field -->
+        <div class="space-y-2">
+          <label for="email" class="block text-sm font-semibold text-[var(--text-on-glass-secondary)] tracking-wide">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="w-full px-5 py-4 bg-[var(--glass-bg-dark)] border border-white/10 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-[#62ba1b] focus:ring-1 focus:ring-[#62ba1b]/50 transition-all duration-300"
+            placeholder="jane@example.com"
+          />
+        </div>
       </div>
 
-      <div>
-        <label for="email" class="block text-xs font-semibold font-['IBM_Plex_Mono'] text-[#080808] mb-2">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          class="w-full px-4 py-2 bg-[#f8f8f8] border border-[#d8d8d8] rounded text-xs font-['IBM_Plex_Mono'] text-[#080808] placeholder:text-[#757575] focus:outline-none focus:border-[#3f8e00]"
-          placeholder="your@email.com"
-        />
-      </div>
-
-      <div>
-        <label for="message" class="block text-xs font-semibold font-['IBM_Plex_Mono'] text-[#080808] mb-2">
+      <!-- Message Field -->
+      <div class="space-y-2">
+        <label for="message" class="block text-sm font-semibold text-[var(--text-on-glass-secondary)] tracking-wide">
           Message
         </label>
         <textarea
@@ -119,27 +127,29 @@
           name="message"
           rows="5"
           required
-          class="w-full px-4 py-2 bg-[#f8f8f8] border border-[#d8d8d8] rounded text-xs font-['IBM_Plex_Mono'] text-[#080808] placeholder:text-[#757575] focus:outline-none focus:border-[#3f8e00] resize-none"
-          placeholder="Your message..."
+          class="w-full px-5 py-4 bg-[var(--glass-bg-dark)] border border-white/10 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-[#62ba1b] focus:ring-1 focus:ring-[#62ba1b]/50 transition-all duration-300 resize-none"
+          placeholder="How can I help you?"
         ></textarea>
       </div>
 
       {#if contactMutation.isError}
-        <p class="text-sm text-red-500 font-['IBM_Plex_Mono']">
-          {contactMutation.error?.message || 'An error occurred'}
-        </p>
+        <div class="p-4 bg-[var(--color-error-900)]/20 border border-[var(--color-error-500)]/30 rounded-xl">
+          <p class="text-sm text-[var(--color-error-400)] font-medium text-center">
+            {contactMutation.error?.message || 'An error occurred'}
+          </p>
+        </div>
       {/if}
 
       <button
         type="submit"
-        class="inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#3f8e00] hover:bg-[#2d6600] border border-[#62ba1b] rounded text-white font-bold font-['IBM_Plex_Mono'] text-sm shadow-[0px_8px_30px_0px_rgba(63,142,0,0.3)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        class="w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#3f8e00] hover:bg-[#2d6600] border border-[#62ba1b] rounded-xl text-white font-bold text-lg shadow-[0_0_30px_rgba(63,142,0,0.3)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1"
         disabled={contactMutation.isPending}
       >
-        <Mail class="w-4 h-4" />
+        <Mail class="w-5 h-5" />
         {#if contactMutation.isPending}
           Sending...
         {:else}
-          Submit
+          Send Message
         {/if}
       </button>
     </form>

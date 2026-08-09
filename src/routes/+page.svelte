@@ -23,12 +23,38 @@
     gsap.from(".hero-content", {
       opacity: 0,
       y: 50,
-      duration: 1,
+      duration: 0.5,
       ease: "power3.out",
-      delay: 0.3
+      delay: 0.2
     });
 
-    // Animate sections on scroll
+    gsap.from(".dev-toolbox-animation", {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+      ease: "power3.out",
+      delay: 0.4
+    });
+
+    gsap.from(".profile-pict-animation", {
+      opacity: 0,
+      y: 50,
+      duration: 1.2,
+      ease: "power3.out",
+      delay: 0.58
+    });
+
+    gsap.to(".profile-pict-animation", {
+      scrollTrigger: {
+        trigger: ".hero-content",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      scale: 0.4,
+      ease: "none"
+    });
+
     const sections = [".case-studies-section", ".services-section", ".recent-work-section", ".contact-section"];
     sections.forEach(selector => {
       gsap.from(selector, {
@@ -63,6 +89,92 @@
         }
       });
     }
+
+    // Staggered animations for case studies
+    gsap.from(".case-study-item", {
+      scrollTrigger: {
+        trigger: ".case-studies-section",
+        start: "top 80%",
+        toggleActions: "play none none reverse"
+      },
+      opacity: 0,
+      y: 60,
+      duration: 1,
+      stagger: 0.3,
+      ease: "power3.out"
+    });
+
+    // Animate case study images with parallax
+    gsap.utils.toArray<HTMLElement>('.case-study-image').forEach((img, index) => {
+      gsap.to(img, {
+        scrollTrigger: {
+          trigger: img,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+        y: index % 2 === 0 ? -50 : 50,
+        ease: "none"
+      });
+    });
+
+ 
+
+    // Animate services cards on hover
+    gsap.utils.toArray<HTMLElement>('.service-card').forEach(card => {
+      const icon = card.querySelector('.service-icon');
+      const title = card.querySelector('.service-title');
+      
+      card.addEventListener('mouseenter', () => {
+        gsap.to(icon, { scale: 1.2, rotation: 360, duration: 0.6, ease: "back.out(1.7)" });
+        gsap.to(title, { x: 10, duration: 0.3, ease: "power2.out" });
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        gsap.to(icon, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(1.7)" });
+        gsap.to(title, { x: 0, duration: 0.3, ease: "power2.out" });
+      });
+    });
+
+    // Animate "Let's get started" button
+    const ctaButton = document.querySelector('.cta-button');
+    if (ctaButton) {
+      gsap.to(ctaButton, {
+        scale: 1.005,
+        duration: 1.5,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+    }
+
+    // Animate tech tags in services
+    gsap.utils.toArray<HTMLElement>('.tech-tag').forEach((tag, index) => {
+      gsap.from(tag, {
+        scrollTrigger: {
+          trigger: tag,
+          start: "top 90%",
+          toggleActions: "play none none reverse"
+        },
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.5,
+        delay: index * 0.1,
+        ease: "back.out(1.7)"
+      });
+    });
+
+    // Parallax background effect for hero
+    gsap.to(".hero-section", {
+      scrollTrigger: {
+        trigger: ".hero-section",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      backgroundPosition: "50% 100%",
+      ease: "none"
+    });
   });
 
   onDestroy(() => {
@@ -107,25 +219,27 @@
     { name: "Jira", opacity: 1 },
     { name: "Convex", opacity: 0.5 },
     { name: "OpenCode", opacity: 0.5 },
+    { name: "OpenRouter", opacity: 0.5 },
     { name: "Claude", opacity: 0.5 },
     { name: "GitHub Copilot", opacity: 0.5 },
-    { name: "Notion", opacity: 0.5 },
-    { name: "Chrome DevTools", opacity: 0.5 },
+    { name: "Google Cloud", opacity: 0.5 },
+    { name: "Firebase", opacity: 0.5 },
     { name: "Bun", opacity: 0.5 },
-    { name: "Jupyter Notebook", opacity: 0.5 },
-    { name: "Visual Studio Code", opacity: 0.5 }
+    { name: "Supabase", opacity: 0.5 },
+    { name: "Cloudflare", opacity: 0.5 },
+    { name: "AWS", opacity: 0.5 }
 
   ];
 </script>
 
-<div class="relative bg-white">
+<div class="relative bg-black">
   <!-- Navigation -->
-  <div class="w-full sticky top-0 z-[99]">
-    <Nav />
-  </div>
+   
+      <Nav />
+  
 
   <!-- Hero Section -->
-  <section class="relative bg-[#080808] min-h-[700px] overflow-hidden">
+  <section class="hero-section relative bg-gradient-to-b from-[#080808] to-[#0a0a0a] min-h-[700px] overflow-hidden">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
       <div class="relative pt-24 pb-20 lg:pt-32 lg:pb-28">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -136,13 +250,13 @@
                 Rifky Adni Putra
               </h1>
               <p class="text-[#9c9c9c] text-sm sm:text-base leading-relaxed max-w-lg font-['IBM_Plex_Mono']">
-                Intro text: Full-stack developer passionate about creating beautiful, functional web applications. Specializing in modern web technologies and always eager to tackle new challenges.
+                Senior full-stack developer working on AI R&D at Micromeet — building an AI Command Centre, agent-based cowork tooling, and the LLM pipelines behind them. Based in Indonesia, working with global teams.
               </p>
             </div>
             
             <a 
               href="#contact"
-              class="inline-flex items-center gap-2 px-12 py-4 bg-[#3f8e00] hover:bg-[#2d6600] border border-[#62ba1b] rounded text-white font-bold font-['IBM_Plex_Mono'] text-base shadow-[0px_8px_30px_0px_rgba(63,142,0,0.5)] transition-all duration-300"
+              class="cta-button inline-flex items-center gap-2 px-12 py-4 bg-[#3f8e00] hover:bg-[#2d6600] border border-[#62ba1b] rounded text-white font-bold font-['IBM_Plex_Mono'] text-base shadow-[0px_8px_30px_0px_rgba(63,142,0,0.5)] transition-all duration-300"
             >
               Let's get started
               <ChevronRight class="w-4 h-4" />
@@ -150,7 +264,7 @@
           </div>
 
           <!-- Right content - Hero image -->
-          <div class="flex justify-center lg:justify-end">
+          <div class="flex justify-center lg:justify-end profile-pict-animation">
             <div class="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] rounded-full overflow-hidden">
               <img src={hero} alt="Profile" class="w-full h-full object-cover" />
             </div>
@@ -158,8 +272,8 @@
         </div>
 
         <!-- Worked with section -->
-        <div class="mt-16 sm:mt-20">
-          <p class="text-white text-sm font-['IBM_Plex_Mono'] mb-6">Dev Toolbox</p>
+        <div class="mt-16 sm:mt-20 dev-toolbox-animation">
+          <p class="text-white text-sm font-['IBM_Plex_Mono'] mb-6">Worked with: </p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
             {#each companyLogos as logo}
               <div 
@@ -175,10 +289,10 @@
     </section>
 
   <!-- Case Studies Section -->
-  <section class="case-studies-section py-20 lg:py-32 bg-white">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+  <section class="case-studies-section py-20 lg:py-32 bg-[#0a0a0a] relative">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
       <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-['Raleway'] text-[#080808] mb-4">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-['Raleway'] text-white mb-4">
           Case Studies
         </h2>
         <p class="text-[#9c9c9c] text-sm sm:text-base max-w-2xl mx-auto font-['IBM_Plex_Mono']">
@@ -189,21 +303,22 @@
 
       <div class="space-y-20">
         {#each caseStudies as study, index}
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center" class:md:flex-row-reverse={index % 2 === 1}>
-            <div class={`${index % 2 === 1 ? 'md:order-2' : ''}`}>
-              <div class="aspect-[3/2] rounded-xl overflow-hidden shadow-lg">
-                <img src={study.image} alt={study.title} class="w-full h-full object-cover" />
+          <div class="case-study-item grid grid-cols-1 md:grid-cols-2 gap-8 items-center" class:md:flex-row-reverse={index % 2 === 1}>
+            <div class="case-study-image relative group" class:md:order-2={index % 2 === 1}>
+              <div class="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="aspect-[3/2] rounded-xl overflow-hidden shadow-2xl relative border border-white/5 group-hover:border-white/20 transition-all duration-500 bg-[#111]">
+                <img src={study.image} alt={study.title} class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100" />
               </div>
             </div>
             
             <div class={`space-y-4 ${index % 2 === 1 ? 'md:order-1' : ''}`}>
               <span 
                 class="inline-block px-4 py-1 rounded-full text-xs font-bold font-['IBM_Plex_Mono']"
-                style="color: {study.tagColor}; background: {study.tagBg}"
+                style="color: {study.tagColor}; border: 1px solid {study.tagColor}40"
               >
                 {study.tag}
               </span>
-              <h3 class="text-2xl lg:text-3xl font-extrabold font-['Raleway'] text-[#080808]">
+              <h3 class="text-2xl lg:text-3xl font-extrabold font-['Raleway'] text-white">
                 {study.title}
               </h3>
               <p class="text-[#9c9c9c] text-sm leading-relaxed font-['IBM_Plex_Mono']">
@@ -212,8 +327,11 @@
               <button 
                 class="inline-flex items-center gap-2 px-6 py-2 rounded text-white font-bold font-['IBM_Plex_Mono'] text-sm shadow-lg transition-all duration-300 hover:shadow-xl"
                 style="background: {study.buttonColor}; box-shadow: 0px 8px 30px 0px {study.buttonColor}1a"
+                onclick={() => {
+                  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
               >
-                View case study
+                Request Case Study
                 <ChevronRight class="w-4 h-4" />
               </button>
             </div>
@@ -239,14 +357,14 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         {#each services as service, index}
           <div 
-            class="relative border border-[#484848] rounded-lg p-8 hover:border-[#3f8e00] transition-all duration-300"
+            class="service-card relative border border-[#484848] rounded-lg p-8 hover:border-[#3f8e00] transition-all duration-300"
             in:fade={{ duration: 600, delay: index * 100 }}
           >
             <div class="flex items-center gap-4 mb-4">
-              <div class="p-3 bg-[#3f8e00]/20 rounded-lg">
+              <div class="service-icon p-3 bg-[#3f8e00]/20 rounded-lg">
                 <svelte:component this={service.icon} class="w-6 h-6 text-[#3f8e00]" />
               </div>
-              <h3 class="text-xl font-bold font-['Raleway'] text-white">{service.title}</h3>
+              <h3 class="service-title text-xl font-bold font-['Raleway'] text-white">{service.title}</h3>
             </div>
             
             <p class="text-[#9c9c9c] text-sm font-['IBM_Plex_Mono'] leading-relaxed mb-4">
@@ -255,7 +373,7 @@
 
             <div class="flex flex-wrap gap-2">
               {#each service.technologies.slice(0, 4) as tech}
-                <span class="px-2 py-1 bg-white/10 rounded text-xs font-['IBM_Plex_Mono'] text-white/70">
+                <span class="tech-tag px-2 py-1 bg-white/10 rounded text-xs font-['IBM_Plex_Mono'] text-white/70">
                   {tech}
                 </span>
               {/each}
@@ -267,10 +385,10 @@
   </section>
 
   <!-- Recent Work Section -->
-  <section class="recent-work-section py-20 lg:py-32 bg-[#f0f0f0]">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+  <section class="recent-work-section py-20 lg:py-32 bg-[#0a0a0a] relative border-t border-white/5">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
       <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-['Raleway'] text-[#080808] mb-4">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-['Raleway'] text-white mb-4">
           Recent Work
         </h2>
         <p class="text-[#9c9c9c] text-sm sm:text-base max-w-2xl mx-auto font-['IBM_Plex_Mono']">
@@ -281,12 +399,13 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         {#each recentWork as work, index}
-          <div class="space-y-6" in:fade={{ duration: 600, delay: index * 100 }}>
-            <div class="aspect-[3/2] rounded-xl overflow-hidden shadow-lg bg-[#f8f8f8] flex items-center justify-center">
-              <span class="text-[#9c9c9c] font-['IBM_Plex_Mono'] text-sm">Project Preview</span>
+          <div class="group space-y-6 p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300 shadow-xl" in:fade={{ duration: 600, delay: index * 100 }}>
+            <div class="aspect-[3/2] rounded-xl overflow-hidden shadow-2xl bg-[#111] border border-white/5 flex items-center justify-center relative">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              <span class="text-[#9c9c9c] font-['IBM_Plex_Mono'] text-sm group-hover:scale-110 transition-transform duration-500 z-10">Project Preview</span>
             </div>
-            <div class="space-y-3">
-              <h3 class="text-2xl font-extrabold font-['Raleway'] text-[#080808]">
+            <div class="space-y-4">
+              <h3 class="text-2xl font-extrabold font-['Raleway'] text-white group-hover:text-[#62ba1b] transition-colors duration-300">
                 {work.title}
               </h3>
               <p class="text-[#9c9c9c] text-sm font-['IBM_Plex_Mono'] leading-relaxed">
@@ -294,7 +413,7 @@
               </p>
               <div class="flex flex-wrap gap-2">
                 {#each work.technologies.slice(0, 4) as tech}
-                  <span class="px-2 py-1 bg-[#f1f5f9] rounded text-xs font-['IBM_Plex_Mono'] text-[#64748b]">
+                  <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-['IBM_Plex_Mono'] text-[#9c9c9c]">
                     {tech}
                   </span>
                 {/each}

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Calendar, Clock, ArrowLeft, Share2 } from "@lucide/svelte";
+  import { Calendar, Clock, ArrowLeft, Share2, ChevronUp } from "@lucide/svelte";
   import { fade } from "svelte/transition";
   import { formatDate } from "$lib/blog";
   import type { PageData } from "./$types";
-  import { Nav } from "$lib/components";
+  import { Nav, GradientBackground } from "$lib/components";
 
   interface Props {
     data: PageData;
@@ -12,6 +12,18 @@
   let { data }: Props = $props();
 
   const { post } = data;
+
+  let showBackToTop = $state(false);
+
+  $effect(() => {
+    const handleScroll = () => {
+      showBackToTop = window.scrollY > 300;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  });
 </script>
 
 <svelte:head>
@@ -25,9 +37,7 @@
   <meta name="twitter:description" content={post.metadata.excerpt} />
 </svelte:head>
 
-<div
-  class="min-h-screen bg-gradient-to-br from-slate-800 to-slate-700 text-white"
->
+<GradientBackground class="min-h-screen text-white">
   <!-- Navigation -->
   <div class="flex justify-center pt-8">
     <Nav />
@@ -128,7 +138,7 @@
           <div class="text-center">
             <p class="text-gray-400 mb-2">Enjoyed this article?</p>
             <a
-              href="/links"
+              href="/contact"
               class="text-gray-200 hover:text-white transition-colors font-semibold"
             >
               Follow me for more content
@@ -138,7 +148,17 @@
       </footer>
     </article>
   </main>
-</div>
+
+  <!-- Back to Top Button -->
+  {#if showBackToTop}
+    <button
+      class="fixed bottom-8 right-8 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 z-50"
+      onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    >
+      <ChevronUp class="w-6 h-6" />
+    </button>
+  {/if}
+</GradientBackground>
 
 <style>
 </style>

@@ -12,6 +12,7 @@
 \usepackage[english]{babel}
 \usepackage{tabularx}
 
+
 \usepackage[
   a4paper,
   left=3cm,
@@ -26,14 +27,19 @@
 \input{glyphtounicode}
 
 % Font options (default Computer Modern)
+% Font options
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault}
+
+
 \pagestyle{fancy}
 \fancyhf{}
 \fancyfoot{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 
-\addtolength{\oddsidemargin}{-0.5in}
-\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\oddsidemargin}{-0.65in}
+\addtolength{\evensidemargin}{-0.65in}
 \addtolength{\textwidth}{1in}
 \addtolength{\topmargin}{-.3in}
 \addtolength{\textheight}{1.0in}
@@ -68,57 +74,47 @@
 \newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
 \newcommand{\SectionTitle}{\Large\bfseries\scshape\raggedright}
 
+
 \begin{document}
 
 \begin{center}
   \textbf{\Huge Rifky Adni Putra} \\
-  \small This resume is generated from LaTeX source code. please visit www.pir.my.id and use contact form to reach out. $|$ 
+  \small +62 831 049 04353 $|$ \href{mailto:rifkyadp@gmail.com}{rifkyadp@gmail.com} $|$ 
   \href{https://linkedin.com/in/rifptra}{linkedin.com/in/rifptra} $|$
   \href{https://github.com/rifkyputra}{github.com/rifkyputra} \\
-  \href{https://pir.my.id}{www.pir.my.id}
 \end{center}
 
 \section{\SectionTitle {Summary}}
-Software Engineer specializing in modern web technologies with strong experience in building scalable, reliable, and accessible applications across HR Tech, Industrial Mining, and Healthcare sectors. Expert in React.js and Node.js with a background spanning frontend, backend, and mobile development. Proven ability to ship high-quality features, modernize legacy systems, and optimize performance across distributed environments. Strong ownership, fast learning, and comfortable working in ambiguous problem spaces. Passionate about solving real-world problems with modern and pragmatic full-stack approaches.
+Fullstack Software Engineer with over 5 years of experience architecting resilient, scalable systems across the Singaporean and Southeast Asian tech landscapes. Experienced in Node.js and Go, with a deep background in Cloud-Native infrastructure (KCNA \& KCSA) and AWS to support high-volume data queries and scalable architectures. Proven track record in full-stack and mobile development, enabling the design of high-efficiency, client-optimized APIs and user-friendly UIs. Passionate about leveraging AI-powered solutions to transform higher education and student career readiness. Experienced in fast-paced, remote, and VUCA environments, with a strong desire to help build a global-standard AI B2B SaaS enterprise from Southeast Asia.
 
 \section{\SectionTitle {Work Experience}}
 \resumeSubHeadingList
   \resumeSubheading
       {Software Engineer}{Jan 2025 -- Jan 2026}
-      {EngageRocket Pte. Ltd. (Employee engagement platform)}{Singapore, SG - Remote}
-      \resumeItem{\textbf{Stack:} React.js, Go, PostgreSQL, Redis, Docker, Kubernetes, AWS }
+      {EngageRocket Pte. Ltd. (Employee Engagement Platform)}{Singapore, SG - Remote}
+      \resumeItem{\textbf{Stack:} Go, Node.js, PostgreSQL, Redis, Docker, Kubernetes, AWS}
       \resumeSubHeadingList
-          \resumeItem{\textbullet\ Develop new features and fix bugs in legacy code.}
-          \resumeItem{\textbullet\ Implemented graph based layout in new org structure feature.}
-          \resumeItem{\textbullet\ Participated in on-call rotations to diagnose and resolve production incidents, improving SLA and system uptime.} 
-          \resumeItem{\textbullet\ Established front-end testing standards using Jest, React Testing Library, improving test coverage from 0\% to 30\%, reducing regression test workload.}
+          \resumeItem{\textbullet\ Engineered a resilient data ingestion pipeline to process 100k+ row Excel uploads; implemented stateful, recoverable logic to ensure data integrity.}
+          \resumeItem{\textbullet\ Developed a graph-based organizational structure feature using React and Go, optimizing complex hierarchical data visualization for enterprise clients.}
+          \resumeItem{\textbullet\ Handled production incident resolution during on-call rotations, maintaining high system availability.}
+          \resumeItem{\textbullet\ Established front-end testing standards (Jest/React Testing Library), increasing coverage from 0\% to 30\% and reducing regression bugs in the core product.}
+          \resumeItem{\textbullet\ Developed core modules with clean, scalable architecture that supports future AI integrations.}
       \resumeSubHeadingListEnd
   \resumeSubheading
-      {Senior Full Stack Developer}{May 2024 -- Jan 2025}
+      {Senior Full Stack Developer}{July 2023 -- Jan 2025}
       {ABBA Maintenance Pte. Ltd. (Home cleaning company)}{Singapore, SG - Remote} \\
-      \resumeItem{\textbf{Stack:} Hono, React.js/Next.js, PostgreSQL, tRPC, RabbitMQ, AWS}
+      \resumeItem{\textbf{Stack:} Hono (Node.js), React.js/Next.js, PostgreSQL, tRPC, RabbitMQ, AWS}
       \resumeSubHeadingList
           \resumeItem{\textbullet\ Developed and deployed an employee management platform.}
-          \resumeItem{\textbullet\ Tracked real-time employee locations and displayed the nearest worker to each client.}
-          \resumeItem{\textbullet\ Created Github Action CI/CD pipeline.}
+          \resumeItem{\textbullet\ Tracked real-time employee locations and displayed the nearest worker to each client improving dispatch efficiency and reducing manual coordination time.}
+          \resumeItem{\textbullet\ Created Github Action CI/CD pipeline to ensure fast iteration.}
           \resumeItem{\textbullet\ Architected backend APIs and optimized data flows across distributed systems.}
           \resumeItem{\textbullet\ Directed and supervise interns from National University of Singapore.}
       \resumeSubHeadingListEnd
   \resumeSubheading
-      {Flutter Developer}{Aug 2023 -- May 2024}
-      {PT Ewide Indonesia (Software Agency, EwidePlus Korea branch)}{Jakarta, ID}
-      \resumeItem{\textbf{Stack:} Flutter, React.js}
-      \resumeSubHeadingList
-          \resumeItem{\textbullet\ Built mobile apps for Education Sector.}
-          \resumeItem{\textbullet\ Collaborated with cross-functional teams to deliver solutions.}
-          \resumeItem{\textbullet\ Oversee and give consultation to vendor for the best practices.}
-          \resumeItem{\textbullet\ Built and deployed a Carbon Calculator product from scratch.}
-          \resumeItem{\textbullet\ Managed the full mobile application release cycle to both the Apple App Store and Google Play Store.}
-      \resumeSubHeadingListEnd
-  \resumeSubheading
-      {Software Engineer}{May 2020 -- Aug 2023}
+      {Software Engineer}{May 2020 -- July 2023}
       {PT Berau Coal Energy Tbk (Mining, Sinarmas Group - Indonesian Conglomerates)}{Jakarta, ID}
-      \resumeItem{\textbf{Stack:} Node.js (Koa.js), Vue, Flutter, Express, MongoDB, AWS}
+      \resumeItem{\textbf{Stack:} Node.js (Koa.js), Vue, Flutter, Express(Node.js), MongoDB, AWS}
       \resumeSubHeadingList
           \resumeItem{\textbullet\ Built mobile apps for mining operation with remote location constraint. full offline mode sync capability.}
           \resumeItem{\textbullet\ Code Contributor to internal web applications supporting mining operations.}
@@ -131,15 +127,22 @@ Software Engineer specializing in modern web technologies with strong experience
 \section{\SectionTitle{Projects}}
 \resumeSubHeadingList
 
+
 \resumeSubheading
-      {Medical AI Assistant}{January 2025 -- Present}
-      {Author}{FastAPI, LangGraph, MCP, React}
+      {TraceHub}{January 2025 -- Present}
+      {Author}{Nest.js(Node.js), React.js, RabbitMQ, PostgreSQL}
+      \resumeItem{NestJS-based traceability and audit platform that manages product formulas, procurement, QC workflows, production batches with FIFO material consumption, inventory, and exportable compliance reports. Implemented domain models, PostgreSQL-backed REST APIs, and end-to-end traceability enabling immutable audit trails and streamlined regulatory investigations}
+
+      
+\resumeSubheading
+      {Medical AI Assistant}{January 2025}
+      {Author}{FastAPI, LangGraph, MCP, React.js}
       \resumeItem{Built a medical triage assistant with FastAPI + LangGraph routing, MCP tools for interoperability, and a streaming React chat UI; delivers cholesterol/diabetes risk assessments, first-aid guidance, and WebSocket live responses backed by OpenRouter LLM.}
 
   
   \resumeSubheading
       {Galeriee (galeri.ee)}{Oct 2025 -- Nov 2025}
-      {Author}{Tanstack Start, ffmpeg, R2, Turso}
+      {Author}{Tanstack Start, Convex, ffmpeg, R2, Turso}
       \resumeItem{ Full-stack collaborative gallery app with role-based authentication, ffmpeg compression, email invitations, and a serverless architecture.}
       
   \resumeSubheading
@@ -160,29 +163,23 @@ Software Engineer specializing in modern web technologies with strong experience
       {Open Source Projects}{Jan 2020 -- Present} 
       {Authors \& Contributors}{Bash, Dart, Flutter, Rust, React.js, etc.}
       \resumeSubHeadingList
-          \resumeItem{\textbullet\ \textbf{Networking tools:} sshii, uwuhomelab.} 
+          \resumeItem{\textbullet\ \textbf{Networking tools:} sshii} 
           \resumeItem{\textbullet\ \textbf{Linux Desktop:} KppleMenu}
-          \resumeItem{\textbullet\ \textbf{Experimentals:} honotan, fiochat, dart’s shelf article API, firebase face recognition, rust actix api, todoids, soundboard pwa}
+          \resumeItem{\textbullet\ \textbf{Experimentals:} honotan, dart’s shelf article API, firebase face recognition, rust actix api, todoids, soundboard pwa}
       \resumeSubHeadingListEnd
 \resumeSubHeadingListEnd
 
 \section{\SectionTitle{Technical Skills}}
 \resumeSubHeadingList
-
-  \resumeItem{\textbf{Programming Languages}: TypeScript (Advanced), Dart (Advanced), Go (intermediate), Python (intermediate), Bash (Basic).}
-  
-  \resumeItem{\textbf{Frontend/Mobile}: React.js, Flutter, TanStack Start, SvelteKit, GSAP, Rive, Lottie, Bloc, Riverpod, Redux, Zustand, MobX, Better Auth, React Flow, vite, zod }
-  \resumeItem{\textbf{Backend}: NestJS, Hono, FastAPI, express.js Chi(Go), Fiber, BullMQ, RabbitMQ}
-  \resumeItem{\textbf{Database}: Sqlite, PostgreSQL, Redis, MySQL, MongoDB }
-  \resumeItem{\textbf{Testing}: Jest, Bun Test, Vitest, React Testing Library, lcov }
-  \resumeItem{\textbf{Cloud}: Cloudflare worker,Cloudflare R2, AWS EC2, AWS S3, AWS ECS }
-  \resumeItem{\textbf{Logging}: Sentry, Crashlytics, Axiom }
+  \resumeItem{\textbf{Core Backend}: Node.js (NestJS, Hono, Express), Go (Chi, Fiber, Echo), FastAPI TypeScript, Python}
+  \resumeItem{\textbf{Cloud \& Infrastructure}: Kubernetes (KCNA/KCSA Certified), AWS (EC2, S3, ECS, RDS), Docker, CI/CD (GitHub Actions), Cloudflare(R2, Workers, D1 Database), Google Cloud}
+  \resumeItem{\textbf{Database \& Data}: PostgreSQL, Redis, MongoDB, RabbitMQ (Messaging), PostGIS}
+  \resumeItem{\textbf{Testing \& Quality}: Jest, Vitest, React Testing Library}
+  \resumeItem{\textbf{Cross-Functional}: React.js, Next.js, Tanstack Start, Svelte, Flutter (Mobile), System Design}
   \resumeItem{\textbf{GIS}: PostGIS, Google Maps API }
-  \resumeItem{\textbf{CI/CD}: Github Action, Gitlab Runner }
-  \resumeItem{\textbf{Containerization}: Docker, Kubernetes }
   \resumeItem{\textbf{Dev Platforms}: Firebase, Supabase, Convex }
   \resumeItem{\textbf{Scripting}: Bash, Python, Bun }
-  \resumeItem{\textbf{AI/Automation}: n8n, LangChain, RAG }
+  \resumeItem{\textbf{AI/Automation}: LangChain, LangGraph, RAG }
   \resumeItem{\textbf{Architecture}: Microservices, Event-Driven Architecture, Monolithic, CQRF, RESTful APIs, tRPC, WebSockets, Serverless}
 \resumeSubHeadingListEnd
 
@@ -225,7 +222,7 @@ Software Engineer specializing in modern web technologies with strong experience
       {INDRAPRASTA PGRI UNIVERSITY}{ }
       {Major in Informatics Engineering}{ - } 
       \resumeSubHeadingList
-      \resumeItem{\textbullet\ Learning: Operating Systems; Algorithms; Data Structure; OOP}
+      \resumeItem{\textbullet\ Learning: Computer Science, Operating Systems; Algorithms; Data Structure; OOP}
       \resumeSubHeadingListEnd
   \resumeSubheading
       {Enigma Camp}{ } 
@@ -238,7 +235,6 @@ Software Engineer specializing in modern web technologies with strong experience
 \section{\SectionTitle{Additionals}}
 \resumeSubHeadingList
       \resumeItem{\textbf{Languages:} English, Indonesian}{} \\
-      \resumeItem{\textbf{Interest/Hobbies:} Water Sports, Snorkeling}{ } 
 \resumeSubHeadingListEnd
 
 \end{document}

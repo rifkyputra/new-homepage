@@ -41,7 +41,7 @@ function checkRateLimit(ip: string): { allowed: boolean; remaining: number } {
 
 // CORS middleware - allow requests from your frontend domain
 app.use('/*', cors({
-  origin: ['https://pir.my.id','http://localhost:5173', 'http://localhost:5174', ], // Add your domains
+  origin: ['https://pir.my.id', 'https://rifky.gnomix.id', 'http://localhost:5173', 'http://localhost:5174', ], // Add your domains
   allowMethods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH'],
   maxAge: 86400,
 }))
