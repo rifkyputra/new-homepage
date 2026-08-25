@@ -2,7 +2,7 @@ export const projects = [
   {
     title: "Gnomix",
     description:
-      "B2C self-care gamification with agentic AI: chat with AI health specialists across 15 health pillars, habit tracking with streaks, and WhatsApp/Telegram agent transports. Turborepo monorepo with an in-repo design system, deployed over a Cloudflare Tunnel.",
+      "Digital Activation: gnomix lets brands and agencies run engagements people actually join. An Event (booth day, launch night) with QR check-in, a Lucky Wheel, games, and prizes; or a Campaign, a running program participants enroll in over time. Participants join by link or WhatsApp, no account or login, and stay one person across every activation an organization runs.",
     technologies: ["TanStack Router", "Hono", "oRPC", "Drizzle", "Postgres", "Better-Auth", "Turborepo"],
     status: "personal",
     date: "2026",
